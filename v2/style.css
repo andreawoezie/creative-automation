@@ -1,0 +1,828 @@
+/* Creative Automation – versie 2: gothic
+   Eén motief: grote, verweerde cijfers per hoofdstuk, met een verschoven
+   donkere kopie erachter, zoals een drukafdruk die net niet goed ligt.
+   Palet uit AdobeColor-My Color Theme.jpeg, plus perkament voor de tekst. */
+
+@font-face {
+  font-family: "Rubik Distressed";
+  src: url("Rubik_Distressed/RubikDistressed-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Special Elite";
+  src: url("Special_Elite/SpecialElite-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+
+:root {
+  --bloed: #BF1717;
+  --rood: #8C0D0D;
+  --wijn: #731010;
+  --bordeaux: #400C0C;
+  --nacht: #260808;
+  --perkament: #EADBC8;
+  --perkament-zacht: #C9B6A2;
+
+  --kop: "Rubik Distressed", Impact, sans-serif;
+  --tekst: "Special Elite", "Courier New", monospace;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(120% 70% at 50% 0%, var(--bordeaux) 0%, transparent 70%),
+    var(--nacht);
+  color: var(--perkament);
+  font-family: var(--tekst);
+  font-weight: 400;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--bloed);
+  outline-offset: 4px;
+}
+
+/* ---------- Bewegende achtergrond: vloeibaar bloed (bloed.js) ---------- */
+
+.bloed {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+.bloed-vloeistof { image-rendering: auto; }
+
+/* ---------- Navigatie: horizontale balk bovenaan ---------- */
+
+.balk {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  height: 4rem;
+  padding: 0 clamp(1rem, 3vw, 2.5rem);
+  background: rgba(38, 8, 8, 0.78);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--wijn);
+}
+.balk-titel {
+  flex: none;
+  font-family: var(--kop);
+  font-size: 1.15rem;
+  line-height: 1;
+  color: var(--perkament);
+  text-decoration: none;
+}
+.balk-links {
+  list-style: none;
+  display: flex;
+  gap: clamp(0.25rem, 1.2vw, 1rem);
+  margin: 0 0 0 auto;
+  padding: 0;
+  height: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.balk-links::-webkit-scrollbar { display: none; }
+.balk-links li { flex: none; }
+.balk-links a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  height: 100%;
+  padding: 0 0.5rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  text-decoration: none;
+  color: var(--perkament-zacht);
+  transition: color 0.25s ease;
+}
+.balk-links .nr {
+  font-family: var(--kop);
+  font-size: 1.05rem;
+  color: var(--bloed);
+}
+/* Rode streep onder de link van het hoofdstuk waar je nu bent (script.js) */
+.balk-links a::after {
+  content: "";
+  position: absolute;
+  left: 0.5rem;
+  right: 0.5rem;
+  bottom: -1px;
+  height: 3px;
+  background: var(--bloed);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.1, 1);
+}
+.balk-links a:hover,
+.balk-links a:focus-visible,
+.balk-links a[aria-current="true"] { color: var(--perkament); }
+.balk-links a:hover::after,
+.balk-links a[aria-current="true"]::after { transform: scaleX(1); }
+.balk-links a:focus-visible { outline-offset: -4px; }
+
+.balk-knop { display: none; }
+
+/* Middelgroot scherm: geen plaats voor de titel, wel voor alle links */
+@media (max-width: 1260px) {
+  .balk { gap: 0; padding: 0 0.5rem; }
+  .balk-titel { display: none; }
+  .balk-links { margin: 0 auto; }
+}
+
+/* Gsm en kleine tablet: een hamburgermenu.
+   De knop opent een paneel onder de balk met alle hoofdstukken onder elkaar. */
+@media (max-width: 960px) {
+  .balk {
+    height: 3.5rem;
+    padding: 0 0.25rem 0 1rem;
+  }
+  .balk-titel { display: block; font-size: 1.05rem; }
+
+  .balk-knop {
+    display: grid;
+    align-content: center;
+    gap: 6px;
+    width: 3rem;
+    height: 3rem;
+    margin-left: auto;
+    padding: 0 0.75rem;
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+  .balk-knop span {
+    display: block;
+    height: 3px;
+    background: var(--perkament);
+    transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.1, 1), opacity 0.2s ease, background-color 0.25s ease;
+  }
+  .balk-knop span:nth-child(2) { width: 70%; justify-self: end; background: var(--bloed); }
+  .balk.open .balk-knop span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+  .balk.open .balk-knop span:nth-child(2) { opacity: 0; }
+  .balk.open .balk-knop span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+  .balk.open .balk-knop span { background: var(--bloed); }
+
+  .balk-links {
+    position: fixed;
+    top: 3.5rem;
+    left: 0;
+    right: 0;
+    display: block;
+    height: auto;
+    max-height: calc(100vh - 3.5rem);
+    margin: 0;
+    padding: 0.5rem 0 1rem;
+    overflow-y: auto;
+    background: var(--nacht);
+    border-bottom: 1px solid var(--wijn);
+    /* dicht: het paneel is opgerold naar boven */
+    clip-path: inset(0 0 100% 0);
+    visibility: hidden;
+    transition: clip-path 0.45s cubic-bezier(0.2, 0.7, 0.1, 1), visibility 0s linear 0.45s;
+  }
+  .balk.open .balk-links {
+    clip-path: inset(0 0 0 0);
+    visibility: visible;
+    transition: clip-path 0.45s cubic-bezier(0.2, 0.7, 0.1, 1), visibility 0s;
+  }
+  .balk-links a {
+    gap: 1rem;
+    height: auto;
+    padding: 0.85rem 1.25rem;
+    font-size: 1.05rem;
+  }
+  .balk-links .nr { font-size: 1.5rem; min-width: 1.6em; }
+  /* actief hoofdstuk: een rode streep links in plaats van eronder */
+  .balk-links a::after {
+    left: 0;
+    right: auto;
+    top: 20%;
+    bottom: 20%;
+    width: 4px;
+    height: auto;
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  .balk-links a:hover::after,
+  .balk-links a[aria-current="true"]::after { transform: scaleY(1); }
+}
+
+/* ---------- Titelblad ---------- */
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(2.5rem, 6vh, 4.5rem);
+  padding: 6rem 1rem 5rem;
+  text-align: center;
+  /* de mist mag onderaan over de rand hangen, maar niet zijwaarts uitsteken */
+  overflow-x: clip;
+}
+
+.titel {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-family: var(--kop);
+  font-weight: 400;
+  font-size: clamp(2.6rem, 11vw, 9rem);
+  line-height: 0.95;
+  color: var(--perkament);
+  text-shadow: 0 0 40px rgba(191, 23, 23, 0.35);
+}
+.titel .regel { display: block; }
+.titel .regel + .regel { color: var(--bloed); text-shadow: none; }
+
+/* ---------- Mist onderaan het beginscherm ---------- */
+
+/* --mist gaat van 1 naar 0 zodra je naar beneden scrolt (script.js) */
+.mist {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: -16vh;
+  height: 58vh;
+  pointer-events: none;
+  opacity: var(--mist, 1);
+  transform: translateY(calc((1 - var(--mist, 1)) * 8vh));
+  filter: blur(30px);
+  mix-blend-mode: screen;
+}
+.wolk {
+  position: absolute;
+  bottom: 0;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(191, 23, 23, 0.85), rgba(140, 13, 13, 0.4) 55%, transparent);
+  animation: drijf 16s ease-in-out infinite alternate, gloei 5s ease-in-out infinite alternate;
+}
+.w1 { left: 0; width: 46%; height: 70%; animation-duration: 19s, 6s; }
+.w2 { left: 26%; width: 50%; height: 95%; animation-duration: 14s, 4.5s; animation-delay: -6s, -2s; }
+.w3 { left: 56%; width: 44%; height: 75%; animation-duration: 21s, 5.5s; animation-delay: -11s, -1s; }
+.w4 { left: 8%; width: 34%; height: 55%; animation-duration: 12s, 7s; animation-delay: -3s, -4s;
+  background: radial-gradient(closest-side, rgba(191, 23, 23, 0.7), rgba(115, 16, 16, 0.35) 60%, transparent); }
+.w5 { left: 64%; width: 30%; height: 60%; animation-duration: 17s, 6.5s; animation-delay: -8s, -3s;
+  background: radial-gradient(closest-side, rgba(191, 23, 23, 0.7), rgba(115, 16, 16, 0.35) 60%, transparent); }
+@keyframes drijf {
+  from { transform: translateX(-7%) scale(1, 0.92); }
+  to { transform: translateX(7%) scale(1.08, 1.06); }
+}
+@keyframes gloei {
+  from { opacity: 0.55; }
+  to { opacity: 1; }
+}
+
+/* Pijl naar beneden: een bloeddruppel loopt naar twee gloeiende pijlpunten */
+.verder {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(1.25rem, 5vh, 3rem);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  transform: translateX(-50%);
+  opacity: var(--mist, 1);
+  color: var(--perkament);
+}
+.verder-druppel {
+  position: relative;
+  width: 2px;
+  height: 46px;
+  background: linear-gradient(transparent, var(--bloed));
+  animation: drup 2.6s ease-in infinite;
+}
+.verder-druppel::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -3px;
+  width: 7px;
+  height: 9px;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  background: var(--bloed);
+  transform: translateX(-50%);
+}
+.verder svg {
+  width: 2.25rem;
+  margin-top: 0.4rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 6px rgba(191, 23, 23, 0.95));
+  animation: zak 2.6s ease-in-out infinite;
+  transition: color 0.25s ease;
+}
+.verder:hover svg,
+.verder:focus-visible svg { color: var(--bloed); }
+.verder[data-weg] { visibility: hidden; }
+@keyframes drup {
+  0% { clip-path: inset(0 0 100% 0); opacity: 1; }
+  55% { clip-path: inset(0 0 -10px 0); opacity: 1; }
+  85%, 100% { clip-path: inset(0 0 -10px 0); opacity: 0; }
+}
+@keyframes zak {
+  0%, 100% { transform: translateY(0); }
+  60% { transform: translateY(7px); }
+}
+
+/* ---------- Hoofdstukken ---------- */
+
+main {
+  padding: 0 1rem 4rem;
+}
+
+/* ---------- Footer: naam, klas en het kleurenpalet als bloeddruppels ---------- */
+
+.voet {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: "naam palet" "klas palet";
+  align-items: center;
+  column-gap: 2rem;
+  max-width: calc(23rem + 34rem + 3.5rem);
+  margin: 0 auto;
+  padding: 2.5rem 1rem 3rem;
+  border-top: 1px solid var(--wijn);
+  background: rgba(38, 8, 8, 0.6);
+}
+.voet p { margin: 0; }
+.voet-naam {
+  grid-area: naam;
+  font-family: var(--kop);
+  font-size: 1.5rem;
+  line-height: 1.1;
+  color: var(--perkament);
+}
+.voet-klas {
+  grid-area: klas;
+  font-size: 0.9rem;
+  color: var(--perkament-zacht);
+}
+.palet {
+  grid-area: palet;
+  display: flex;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/* elke kleur is een druppel: rond onderaan, puntig bovenaan */
+.palet li {
+  width: 1.6rem;
+  height: 1.6rem;
+  background: var(--kleur);
+  border: 1px solid rgba(201, 182, 162, 0.45);
+  border-radius: 0 50% 50% 50%;
+  transform: rotate(45deg);
+}
+
+@media (max-width: 700px) {
+  .voet {
+    grid-template-columns: 1fr;
+    grid-template-areas: "naam" "klas" "palet";
+    row-gap: 0.25rem;
+  }
+  .palet { margin-top: 1.25rem; }
+}
+
+.folio {
+  display: grid;
+  /* vaste breedte voor cijfer + scène, zodat alle teksten op dezelfde lijn beginnen */
+  grid-template-columns: clamp(13rem, 30vw, 23rem) minmax(0, 34rem);
+  justify-content: center;
+  align-items: start;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  padding: clamp(4rem, 12vh, 8rem) 0;
+  scroll-margin-top: 3rem;
+}
+
+.nummer {
+  align-self: start;
+  justify-self: end;
+}
+.cijfer {
+  position: relative;
+  display: block;
+  font-family: var(--kop);
+  font-size: clamp(5.5rem, 13vw, 11rem);
+  line-height: 0.8;
+  color: var(--bloed);
+  font-variant-numeric: tabular-nums;
+  isolation: isolate;
+  transition: clip-path 1.1s cubic-bezier(0.2, 0.7, 0.1, 1);
+}
+/* Een donkere kopie, iets verschoven: een misdruk */
+.cijfer::before {
+  content: attr(data-n);
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  color: var(--wijn);
+  transform: translate(0.06em, 0.06em);
+  opacity: 1;
+  transition: transform 1.2s cubic-bezier(0.2, 0.7, 0.1, 1) 0.35s, opacity 1.2s ease 0.35s;
+}
+
+/* Het cijfer komt van onder op zodra het hoofdstuk in beeld komt (script.js) */
+.js .cijfer { clip-path: inset(100% -0.2em -0.2em -0.2em); }
+.js .cijfer::before { transform: translate(0, 0); opacity: 0; }
+.js .folio.zichtbaar .cijfer { clip-path: inset(-0.3em -0.2em -0.2em -0.2em); }
+.js .folio.zichtbaar .cijfer::before { transform: translate(0.06em, 0.06em); opacity: 1; }
+
+.tekst h2 {
+  margin: 0 0 1rem;
+  font-family: var(--kop);
+  font-weight: 400;
+  font-size: clamp(1.7rem, 3.6vw, 2.5rem);
+  line-height: 1.1;
+  color: var(--perkament);
+  text-wrap: balance;
+}
+.tekst p {
+  margin: 0;
+  max-width: 34rem;
+  color: var(--perkament-zacht);
+  hyphens: auto;
+}
+
+/* ---------- Scènes naast de cijfers: één griezelige animatie per hoofdstuk ---------- */
+
+.nummer {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.5rem, 1.5vw, 1.25rem);
+}
+.scene {
+  flex: none;
+  width: clamp(5rem, 9vw, 8rem);
+  height: auto;
+  overflow: hidden;
+  transition: opacity 1s ease 0.6s;
+}
+.scene * { transform-box: fill-box; }
+.js .scene { opacity: 0; }
+.js .folio.zichtbaar .scene { opacity: 1; }
+/* pas bewegen zodra het hoofdstuk in beeld is geweest */
+.js .folio:not(.zichtbaar) .scene * { animation-play-state: paused; }
+
+/* 01 Intro – een oog dat meekijkt: AI als assistent, jij houdt de controle */
+.scene-oog .ooglid { transform-origin: center; animation: knipper 5s infinite; }
+.scene-oog .iris { animation: rondkijken 8s ease-in-out infinite; }
+.scene-oog .pupil { transform-origin: center; animation: pupil 8s ease-in-out infinite; }
+.scene-oog .traan { transform-origin: top; animation: traan 8s ease-in infinite; }
+@keyframes knipper {
+  0%, 90%, 100% { transform: scaleY(1); }
+  93% { transform: scaleY(0.04); }
+  96% { transform: scaleY(1); }
+}
+@keyframes rondkijken {
+  0%, 18% { transform: translate(0, 0); }
+  24%, 42% { transform: translate(-15px, 3px); }
+  48%, 66% { transform: translate(14px, -3px); }
+  72%, 100% { transform: translate(0, 0); }
+}
+@keyframes pupil {
+  0%, 70% { transform: scaleX(1); }
+  74%, 84% { transform: scaleX(2.6); }
+  90%, 100% { transform: scaleX(1); }
+}
+@keyframes traan {
+  0%, 55% { transform: translateY(-4px) scale(0.2); opacity: 0; }
+  62% { transform: translateY(0) scale(1); opacity: 1; }
+  85% { transform: translateY(26px) scaleY(1.4); opacity: 0; }
+  100% { transform: translateY(26px); opacity: 0; }
+}
+
+/* 02 Beeldbewerking – een stempel drukt dezelfde actie op elke foto (batch) */
+.scene-batch .band { animation: band 1.8s linear infinite; }
+.scene-batch .stempel { animation: stempel 1.8s cubic-bezier(0.5, 0, 0.2, 1) infinite; }
+@keyframes band {
+  from { transform: translateX(0); }
+  to { transform: translateX(-40px); }
+}
+@keyframes stempel {
+  0% { transform: translateY(14px); }
+  14%, 86% { transform: translateY(0); }
+  100% { transform: translateY(14px); }
+}
+
+/* 03 Social media – één rij uit de spreadsheet vult alle formaten tegelijk */
+.scene-bulk .rij { animation: rij 6s steps(1) infinite; }
+.scene-bulk .stroom { animation: stroom 0.6s linear infinite; }
+.scene-bulk .vorm { opacity: 0; animation: vorm 6s linear infinite; }
+.scene-bulk .vorm-a { opacity: 1; animation-delay: 0s; }
+.scene-bulk .vorm-b { animation-delay: -4s; }
+.scene-bulk .vorm-c { animation-delay: -2s; }
+@keyframes rij {
+  0% { transform: translateY(0); }
+  33.333% { transform: translateY(14px); }
+  66.666% { transform: translateY(28px); }
+}
+@keyframes stroom { to { stroke-dashoffset: -5; } }
+@keyframes vorm {
+  0% { opacity: 0; }
+  1.5% { opacity: 1; }
+  3% { opacity: 0.15; }
+  4.5%, 31% { opacity: 1; }
+  33.333%, 100% { opacity: 0; }
+}
+
+/* 04 Content generatie – een veer schrijft vanzelf, het beeld verschijnt uit het niets */
+.scene-schrijf .blad { animation: blad 8s ease infinite; }
+.scene-schrijf .beeld { animation: beeld 8s linear infinite; }
+.scene-schrijf .lijn { stroke-dasharray: 1; }
+.scene-schrijf .l1 { animation: l1 8s linear infinite; }
+.scene-schrijf .l2 { animation: l2 8s linear infinite; }
+.scene-schrijf .l3 { animation: l3 8s linear infinite; }
+.scene-schrijf .l4 { animation: l4 8s linear infinite; }
+.scene-schrijf .veer { transform: translate(66px, 82px); animation: veer 8s ease-in-out infinite; }
+@keyframes blad {
+  0%, 88% { opacity: 1; }
+  95%, 100% { opacity: 0; }
+}
+@keyframes beeld {
+  0% { opacity: 0; }
+  4% { opacity: 0.5; }
+  5% { opacity: 0.1; }
+  9% { opacity: 0.7; }
+  10% { opacity: 0.2; }
+  15%, 100% { opacity: 1; }
+}
+@keyframes l1 { 0%, 15% { stroke-dashoffset: 1; } 30%, 100% { stroke-dashoffset: 0; } }
+@keyframes l2 { 0%, 31% { stroke-dashoffset: 1; } 45%, 100% { stroke-dashoffset: 0; } }
+@keyframes l3 { 0%, 46% { stroke-dashoffset: 1; } 60%, 100% { stroke-dashoffset: 0; } }
+@keyframes l4 { 0%, 61% { stroke-dashoffset: 1; } 72%, 100% { stroke-dashoffset: 0; } }
+@keyframes veer {
+  0% { transform: translate(78px, 40px); }
+  15% { transform: translate(38px, 58px); animation-timing-function: linear; }
+  30% { transform: translate(82px, 58px); }
+  31% { transform: translate(38px, 66px); animation-timing-function: linear; }
+  45% { transform: translate(82px, 66px); }
+  46% { transform: translate(38px, 74px); animation-timing-function: linear; }
+  60% { transform: translate(82px, 74px); }
+  61% { transform: translate(38px, 82px); animation-timing-function: linear; }
+  72% { transform: translate(66px, 82px); }
+  86% { transform: translate(84px, 46px); }
+  100% { transform: translate(78px, 40px); }
+}
+
+/* 05 Vibe coding & web – een spin bouwt haar web */
+.scene-web .web { animation: web 10s ease infinite; }
+.scene-web .spaak,
+.scene-web .ring { stroke-dasharray: 1; }
+.scene-web .spaak { animation: spaak 10s ease-out infinite; }
+.scene-web .r1 { animation: r1 10s linear infinite; }
+.scene-web .r2 { animation: r2 10s linear infinite; }
+.scene-web .r3 { animation: r3 10s linear infinite; }
+.scene-web .r4 { animation: r4 10s linear infinite; }
+.scene-web .spin { animation: spin 10s ease-in-out infinite; }
+.scene-web .poot-l { transform-origin: right center; animation: poot 0.5s ease-in-out infinite alternate; }
+.scene-web .poot-r { transform-origin: left center; animation: poot 0.5s ease-in-out infinite alternate-reverse; }
+@keyframes web {
+  0%, 88% { opacity: 0.6; }
+  96%, 100% { opacity: 0; }
+}
+@keyframes spaak { 0%, 4% { stroke-dashoffset: 1; } 22%, 100% { stroke-dashoffset: 0; } }
+@keyframes r1 { 0%, 22% { stroke-dashoffset: 1; } 30%, 100% { stroke-dashoffset: 0; } }
+@keyframes r2 { 0%, 30% { stroke-dashoffset: 1; } 38%, 100% { stroke-dashoffset: 0; } }
+@keyframes r3 { 0%, 38% { stroke-dashoffset: 1; } 46%, 100% { stroke-dashoffset: 0; } }
+@keyframes r4 { 0%, 46% { stroke-dashoffset: 1; } 55%, 100% { stroke-dashoffset: 0; } }
+@keyframes spin {
+  0%, 50% { transform: translateY(-80px); }
+  62% { transform: translateY(2px); }
+  66% { transform: translateY(-3px); }
+  70%, 78% { transform: translateY(0); }
+  82% { transform: translateY(-2px); }
+  86%, 90% { transform: translateY(0); }
+  100% { transform: translateY(-80px); }
+}
+@keyframes poot { to { transform: rotate(6deg); } }
+
+/* 06 E-mailmarketing – de envelop met bloedzegel opent en stuurt een reeks brieven de wereld in */
+.scene-mail .klep-dicht { transform-origin: top; animation: klep-dicht 7s ease-in-out infinite; }
+.scene-mail .klep-open { transform-origin: bottom; transform: scaleY(0); animation: klep-open 7s ease-in-out infinite; }
+.scene-mail .druppel { transform-origin: top; animation: druppel 7s ease-in infinite; }
+.scene-mail .brief { opacity: 0; }
+.scene-mail .b1 { animation: b1 7s ease-in-out infinite; }
+.scene-mail .b2 { animation: b2 7s ease-in-out infinite; }
+.scene-mail .b3 { animation: b3 7s ease-in-out infinite; }
+@keyframes klep-dicht {
+  0%, 8% { transform: scaleY(1); }
+  14%, 86% { transform: scaleY(0); }
+  92%, 100% { transform: scaleY(1); }
+}
+@keyframes klep-open {
+  0%, 14% { transform: scaleY(0); }
+  20%, 80% { transform: scaleY(1); }
+  86%, 100% { transform: scaleY(0); }
+}
+@keyframes druppel {
+  0% { transform: scaleY(0.3); opacity: 1; }
+  8% { transform: scaleY(1.2); opacity: 1; }
+  10%, 92% { transform: scaleY(0); opacity: 0; }
+  100% { transform: scaleY(0.3); opacity: 1; }
+}
+@keyframes b1 {
+  0%, 16% { transform: translate(0, 0); opacity: 0; }
+  20% { transform: translate(0, 0); opacity: 1; }
+  30% { transform: translate(0, -30px); opacity: 1; }
+  44% { transform: translate(46px, -80px) rotate(18deg) scale(0.6); opacity: 0; }
+  100% { transform: translate(46px, -80px); opacity: 0; }
+}
+@keyframes b2 {
+  0%, 16% { transform: translate(0, 0); opacity: 0; }
+  20%, 34% { transform: translate(0, 0); opacity: 1; }
+  44% { transform: translate(0, -30px); opacity: 1; }
+  58% { transform: translate(46px, -80px) rotate(18deg) scale(0.6); opacity: 0; }
+  100% { transform: translate(46px, -80px); opacity: 0; }
+}
+@keyframes b3 {
+  0%, 16% { transform: translate(0, 0); opacity: 0; }
+  20%, 48% { transform: translate(0, 0); opacity: 1; }
+  58% { transform: translate(0, -30px); opacity: 1; }
+  72% { transform: translate(46px, -80px) rotate(18deg) scale(0.6); opacity: 0; }
+  100% { transform: translate(46px, -80px); opacity: 0; }
+}
+
+/* ---------- Scènes bij hover (of een tik op gsm: .eng via script.js) ---------- */
+/* Elke scène doet dan iets extra's, iets engs dat bij het hoofdstuk past */
+
+.scene { cursor: crosshair; transition: opacity 1s ease 0.6s, filter 0.3s ease; }
+.scene:is(:hover, .eng) { filter: drop-shadow(0 0 10px rgba(191, 23, 23, 0.55)); }
+
+/* 01 Het oog stopt met rondkijken en staart je recht aan: de pupil sperrt open,
+   de adertjes lopen vol bloed, het oog trilt en huilt sneller */
+.scene-oog:is(:hover, .eng) .iris { animation: staren 0.12s steps(2) infinite; }
+.scene-oog:is(:hover, .eng) .pupil { animation: none; transform: scaleX(3.2); transition: transform 0.25s ease; }
+.scene-oog:is(:hover, .eng) .ooglid { animation: none; }
+.scene-oog .aders { transition: stroke 0.3s ease, stroke-width 0.3s ease; }
+.scene-oog:is(:hover, .eng) .aders { stroke: #BF1717; stroke-width: 2.4; }
+.scene-oog:is(:hover, .eng) .traan { animation-duration: 1.6s; }
+@keyframes staren {
+  0% { transform: translate(-0.6px, 0.4px); }
+  100% { transform: translate(0.6px, -0.4px); }
+}
+
+/* 02 De batch slaat op hol: de band raast, de stempel ramt erop en spat rood */
+.scene-batch:is(:hover, .eng) .band,
+.scene-batch:is(:hover, .eng) .stempel { animation-duration: 0.45s; }
+.scene-batch .stempel rect:last-child { transition: fill 0.2s ease; }
+.scene-batch:is(:hover, .eng) .stempel { filter: drop-shadow(0 4px 3px #BF1717); }
+.scene-batch:is(:hover, .eng) .stempel rect:last-child { fill: #EADBC8; }
+
+/* 03 De data overspoelt de templates: rijen en vormen flitsen voorbij,
+   de formaten haperen als een glitch */
+.scene-bulk:is(:hover, .eng) .rij { animation-duration: 1.2s; }
+.scene-bulk:is(:hover, .eng) .vorm { animation-duration: 1.2s; }
+.scene-bulk:is(:hover, .eng) .vorm-b { animation-delay: -0.8s; }
+.scene-bulk:is(:hover, .eng) .vorm-c { animation-delay: -0.4s; }
+.scene-bulk:is(:hover, .eng) .stroom { animation-duration: 0.15s; }
+.scene-bulk:is(:hover, .eng) .formaten { animation: glitch 0.9s steps(1) infinite; }
+@keyframes glitch {
+  0%, 100% { transform: translate(0, 0); filter: none; }
+  10% { transform: translate(-2px, 0); filter: drop-shadow(2px 0 0 #BF1717); }
+  20% { transform: translate(1px, 1px); filter: none; }
+  55% { transform: translate(2px, -1px); filter: drop-shadow(-2px 0 0 #BF1717); }
+  65% { transform: translate(0, 0); filter: none; }
+}
+
+/* 04 De veer schrijft als bezeten, en de inkt wordt bloed */
+.scene-schrijf:is(:hover, .eng) .blad,
+.scene-schrijf:is(:hover, .eng) .beeld,
+.scene-schrijf:is(:hover, .eng) .lijn,
+.scene-schrijf:is(:hover, .eng) .veer { animation-duration: 2.6s; }
+.scene-schrijf .lijn { transition: stroke 0.3s ease; }
+.scene-schrijf:is(:hover, .eng) .lijn { stroke: #BF1717; }
+.scene-schrijf:is(:hover, .eng) .beeld rect { fill: #BF1717; }
+
+/* 05 De spin heeft je gezien: ze schiet naar voren, haar poten krioelen
+   en het web trilt */
+/* vergroten vanuit het lijf van de spin, niet vanuit het midden van haar draad */
+.scene-web:is(:hover, .eng) .spin { transform-box: view-box; transform-origin: 60px 58px; animation: aanval 0.35s ease-in-out infinite alternate; }
+.scene-web:is(:hover, .eng) .poot-l,
+.scene-web:is(:hover, .eng) .poot-r { animation-duration: 0.07s; }
+.scene-web:is(:hover, .eng) .web { animation: tril 0.1s linear infinite; opacity: 0.85; }
+@keyframes aanval {
+  from { transform: translateY(0) scale(1.15); }
+  to { transform: translateY(6px) scale(1.55); }
+}
+@keyframes tril {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(0.6px, -0.5px); }
+}
+
+/* 06 De automatisatie draait door: brieven vliegen er non-stop uit,
+   de envelop schokt en het zegel bloedt harder */
+.scene-mail:is(:hover, .eng) .klep-dicht,
+.scene-mail:is(:hover, .eng) .klep-open,
+.scene-mail:is(:hover, .eng) .druppel,
+.scene-mail:is(:hover, .eng) .brief { animation-duration: 1.8s; }
+.scene-mail:is(:hover, .eng) { animation: schok 0.18s linear infinite; }
+@keyframes schok {
+  0%, 100% { transform: translate(0, 0) rotate(0); }
+  33% { transform: translate(-1px, 0) rotate(-1.5deg); }
+  66% { transform: translate(1px, 0) rotate(1.5deg); }
+}
+
+/* ---------- Bloedmarkering op kernwoorden ---------- */
+
+/* Bij het scrollen loopt bloed over het kernwoord (--vul: 0 tot 1)
+   en daarna druipt het naar beneden (--drup: 0 tot 1). Beide in script.js.
+   Laag 1 is de bloedbalk, laag 2 de druppels (een SVG) eronder. */
+.tekst mark {
+  --vul: 1;
+  --drup: 1;
+  padding: 0 0.15em 0.5em;
+  margin: 0 -0.05em;
+  color: inherit;
+  background-color: transparent;
+  background-image:
+    linear-gradient(100deg, var(--rood), var(--bloed) 30%, var(--bloed) 85%, var(--rood)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 40' preserveAspectRatio='none'%3E%3Cpath fill='%23BF1717' d='M0 0H100V3C96 3 95 6 94 14C93 22 90 22 90 14C89 6 86 4 70 4C64 4 63 8 62 30C61 40 57 40 57 30C56 10 54 4 40 4C30 4 29 7 28 18C27 25 24 25 24 18C23 8 20 3 0 3Z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  /* de druppels zitten eerst verstopt achter de bloedbalk en zakken eronder uit */
+  background-position: 0 0.15em, left 0 bottom calc((1 - var(--drup)) * 0.5em);
+  background-size:
+    calc(var(--vul) * 100%) calc(100% - 0.6em),
+    calc(var(--vul) * 100%) 0.5em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  border-radius: 0.1em 0.3em 0.15em 0.25em;
+  transition: color 0.3s ease;
+}
+/* het woord kleurt pas perkament als het bloed er grotendeels overheen ligt */
+.js .tekst mark { --vul: 0; --drup: 0; }
+.js .tekst mark.vol { color: var(--perkament); }
+
+/* ---------- Laadmoment: de titel komt letter per letter op, als inkt ---------- */
+
+.js .titel .l {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(8px);
+  animation: inkt 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+  animation-delay: calc(var(--i) * 55ms + 150ms);
+}
+@keyframes inkt {
+  to { opacity: 1; filter: blur(0); }
+}
+
+/* ---------- Kleine schermen ---------- */
+
+@media (max-width: 700px) {
+  body { font-size: 1rem; }
+
+  .folio {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: start;
+    gap: 1.5rem;
+    padding: 3.5rem 0;
+  }
+  .nummer { justify-self: start; }
+  .cijfer { font-size: 5rem; }
+}
+
+/* ---------- Minder beweging ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js .titel .l { animation: none; opacity: 1; filter: none; }
+  .wolk, .verder-druppel, .verder svg { animation: none; }
+  .js .tekst mark { --vul: 1 !important; --drup: 1 !important; }
+  .js .cijfer { clip-path: none; transition: none; }
+  .js .scene { opacity: 1; transition: none; }
+  .scene, .scene * { animation: none !important; }
+  .balk-links, .balk-links a, .balk-links a::after, .balk-knop span { transition: none !important; }
+  .js .cijfer::before { transform: translate(0.06em, 0.06em); opacity: 1; transition: none; }
+}

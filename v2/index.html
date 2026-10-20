@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Creative Automation</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="balk" aria-label="Navigatie">
+    <a class="balk-titel" href="#top">Creative Automation</a>
+    <button class="balk-knop" type="button" aria-expanded="false" aria-controls="balk-links" aria-label="Menu openen">
+      <span></span><span></span><span></span>
+    </button>
+    <ol class="balk-links" id="balk-links">
+      <li><a href="#intro"><span class="nr">01</span><span class="naam">Intro</span></a></li>
+      <li><a href="#beeld"><span class="nr">02</span><span class="naam">Beeldbewerking</span></a></li>
+      <li><a href="#social"><span class="nr">03</span><span class="naam">Social media</span></a></li>
+      <li><a href="#content"><span class="nr">04</span><span class="naam">Content generatie</span></a></li>
+      <li><a href="#web"><span class="nr">05</span><span class="naam">Vibe coding</span></a></li>
+      <li><a href="#mail"><span class="nr">06</span><span class="naam">E-mailmarketing</span></a></li>
+    </ol>
+  </nav>
+
+  <header class="hero" id="top">
+    <h1 class="titel" aria-label="Creative Automation">
+      <span class="regel">Creative</span>
+      <span class="regel">Automation</span>
+    </h1>
+
+    <!-- Gloeiende mist onderaan het beginscherm; verdwijnt bij het scrollen (script.js) -->
+    <div class="mist" aria-hidden="true">
+      <span class="wolk w1"></span><span class="wolk w2"></span><span class="wolk w3"></span><span class="wolk w4"></span><span class="wolk w5"></span>
+    </div>
+
+    <a class="verder" href="#intro" aria-label="Naar het eerste hoofdstuk">
+      <span class="verder-druppel"></span>
+      <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M8 10l12 12 12-12M8 20l12 12 12-12"/></svg>
+    </a>
+  </header>
+
+  <main>
+    <section class="folio" id="intro" aria-labelledby="h-intro">
+      <div class="nummer" aria-hidden="true">
+        <span class="cijfer" data-n="01">01</span>
+        <svg class="scene scene-oog" viewBox="0 0 120 120">
+          <defs><clipPath id="oog-vorm"><path d="M10 60Q60 18 110 60Q60 102 10 60Z"/></clipPath></defs>
+          <g class="ooglid">
+            <path d="M10 60Q60 18 110 60Q60 102 10 60Z" fill="#C9B6A2"/>
+            <g clip-path="url(#oog-vorm)">
+              <path class="aders" d="M12 60q12-5 20 2M108 60q-12 5-22-1M22 50q8 5 15 2M98 70q-9-4-16 0M30 72q6-2 10 1" stroke="#8C0D0D" stroke-width="1.2" fill="none"/>
+              <g class="iris">
+                <circle cx="60" cy="60" r="20" fill="#BF1717" stroke="#400C0C" stroke-width="3"/>
+                <ellipse class="pupil" cx="60" cy="60" rx="3.5" ry="15" fill="#260808"/>
+                <circle cx="67" cy="52" r="3" fill="#EADBC8" opacity=".75"/>
+              </g>
+            </g>
+            <path d="M10 60Q60 18 110 60Q60 102 10 60Z" fill="none" stroke="#731010" stroke-width="2.5"/>
+          </g>
+          <path class="traan" d="M58 82q-2.5 6 0 9q2.5-3 0-9z" fill="#BF1717"/>
+        </svg>
+      </div>
+      <div class="tekst">
+        <h2 id="h-intro">Intro</h2>
+        <p>Creative Automation leert je hoe je als digitale vormgever <mark>repetitief werk automatiseert</mark> en <mark>AI inzet als creatieve assistent</mark>. Je werkt minder met de hand, produceert meer varianten en houdt toch de controle over het design. Doorheen het semester werk je aan een <mark>periodeopdracht</mark>: een volledige marketingcampagne voor een product, van briefing tot afgewerkte content.</p>
+      </div>
+    </section>
+
+    <section class="folio" id="beeld" aria-labelledby="h-beeld">
+      <div class="nummer" aria-hidden="true">
+        <span class="cijfer" data-n="02">02</span>
+        <svg class="scene scene-batch" viewBox="0 0 120 120">
+          <defs>
+            <g id="foto"><rect width="24" height="28" fill="#400C0C" stroke="#C9B6A2" stroke-width="1.5"/><path d="M3 25l7-10 5 6 4-4 3 8z" fill="#731010"/><circle cx="17" cy="8" r="2.5" fill="#731010"/></g>
+            <g id="stempelafdruk"><rect width="24" height="28" fill="none" stroke="#BF1717" stroke-width="2"/><circle cx="12" cy="12" r="5" fill="#BF1717"/><path d="M12 16v7" stroke="#BF1717" stroke-width="2" stroke-linecap="round"/></g>
+            <clipPath id="batch-na"><rect width="60" height="120"/></clipPath>
+          </defs>
+          <line x1="0" y1="93" x2="120" y2="93" stroke="#731010" stroke-width="2"/>
+          <g class="band">
+            <use href="#foto" x="8" y="62"/><use href="#foto" x="48" y="62"/><use href="#foto" x="88" y="62"/><use href="#foto" x="128" y="62"/><use href="#foto" x="168" y="62"/>
+          </g>
+          <g clip-path="url(#batch-na)">
+            <g class="band">
+              <use href="#stempelafdruk" x="8" y="62"/><use href="#stempelafdruk" x="48" y="62"/><use href="#stempelafdruk" x="88" y="62"/><use href="#stempelafdruk" x="128" y="62"/><use href="#stempelafdruk" x="168" y="62"/>
+            </g>
+          </g>
+          <g class="stempel">
+            <rect x="56" y="4" width="8" height="34" fill="#731010"/>
+            <rect x="46" y="36" width="28" height="10" fill="#8C0D0D"/>
+            <rect x="48" y="46" width="24" height="3" fill="#BF1717"/>
+          </g>
+        </svg>
+      </div>
+      <div class="tekst">
+        <h2 id="h-beeld">Beeldbewerking: acties &amp; batch</h2>
+        <p>Je neemt <mark>Photoshop-acties</mark> op die een reeks bewerkingen onthouden: resizen, achtergronden uitbreiden met <mark>generative fill</mark>, een logo plaatsen en exporteren. Met <mark>batch-verwerking</mark> pas je die actie in één keer toe op een volledige map productfoto's. Zo verwerk je tientallen beelden consistent, zonder ze één voor één te openen.</p>
+      </div>
+    </section>
+
+    <section class="folio" id="social" aria-labelledby="h-social">
+      <div class="nummer" aria-hidden="true">
+        <span class="cijfer" data-n="03">03</span>
+        <svg class="scene scene-bulk" viewBox="0 0 120 120">
+          <defs>
+            <circle id="v-a" r="6"/>
+            <path id="v-b" d="M0-7L7 5H-7Z"/>
+            <path id="v-c" d="M0-7L7 0L0 7L-7 0Z"/>
+          </defs>
+          <rect x="4" y="30" width="34" height="10" fill="#731010"/>
+          <path d="M4 40h34v42H4zM4 54h34M4 68h34M18 40v42" fill="none" stroke="#731010" stroke-width="1.2"/>
+          <rect class="rij" x="4" y="40" width="34" height="14" fill="#BF1717" opacity=".45"/>
+          <path class="stroom" d="M40 61H48" stroke="#BF1717" stroke-width="1.5" stroke-dasharray="2 3"/>
+          <g class="formaten" fill="none" stroke="#C9B6A2" stroke-width="1.3">
+            <rect x="50" y="22" width="28" height="28"/>
+            <rect x="84" y="16" width="24" height="42"/>
+            <rect x="50" y="66" width="60" height="22"/>
+          </g>
+          <g class="formaten" fill="#C9B6A2" opacity=".7">
+            <rect x="54" y="43" width="20" height="2.5"/>
+            <rect x="88" y="42" width="16" height="2.5"/><rect x="88" y="47" width="12" height="2"/>
+            <rect x="70" y="72" width="34" height="2.5"/><rect x="70" y="78" width="24" height="2"/>
+          </g>
+          <g class="formaten" fill="#BF1717"><rect x="90" y="51" width="12" height="4"/><rect x="96" y="82" width="10" height="3.5"/></g>
+          <g class="vorm vorm-a" fill="#BF1717"><use href="#v-a" x="64" y="33"/><use href="#v-a" x="96" y="29"/><use href="#v-a" x="59" y="77"/></g>
+          <g class="vorm vorm-b" fill="#BF1717"><use href="#v-b" x="64" y="33"/><use href="#v-b" x="96" y="29"/><use href="#v-b" x="59" y="77"/></g>
+          <g class="vorm vorm-c" fill="#BF1717"><use href="#v-c" x="64" y="33"/><use href="#v-c" x="96" y="29"/><use href="#v-c" x="59" y="77"/></g>
+        </svg>
+      </div>
+      <div class="tekst">
+        <h2 id="h-social">Social media: Figma automation</h2>
+        <p>In <mark>Figma Buzz</mark> bouw je templates voor verschillende formaten, zoals Instagram-posts, stories en display-banners. Via <mark>bulk create</mark> vul je die templates automatisch met data uit een <mark>CSV- of XLSX-bestand</mark>: titels, taglines, call-to-actions en afbeeldingen. Eén spreadsheet levert zo een volledige campagne op in alle formaten, met een consistent design.</p>
+      </div>
+    </section>
+
+    <section class="folio" id="content" aria-labelledby="h-content">
+      <div class="nummer" aria-hidden="true">
+        <span class="cijfer" data-n="04">04</span>
+        <svg class="scene scene-schrijf" viewBox="0 0 120 120">
+          <rect x="30" y="12" width="60" height="90" fill="#400C0C" stroke="#731010" stroke-width="1.5"/>
+          <g class="blad">
+            <g class="beeld">
+              <rect x="38" y="20" width="44" height="28" fill="#731010"/>
+              <circle cx="70" cy="29" r="5" fill="#C9B6A2" opacity=".8"/>
+              <path d="M38 48l12-14 8 8 6-5 18 11z" fill="#260808"/>
+            </g>
+            <g stroke="#C9B6A2" stroke-width="1.6" stroke-linecap="round" fill="none">
+              <path class="lijn l1" d="M38 58H82" pathLength="1"/>
+              <path class="lijn l2" d="M38 66H82" pathLength="1"/>
+              <path class="lijn l3" d="M38 74H82" pathLength="1"/>
+              <path class="lijn l4" d="M38 82H66" pathLength="1"/>
+            </g>
+          </g>
+          <g class="veer">
+            <path d="M0 0L4-6Q14-27 32-36Q24-18 8-8Z" fill="#C9B6A2"/>
+            <path d="M0 0L30-34" stroke="#731010" stroke-width="1"/>
+            <circle r="1.6" fill="#BF1717"/>
+          </g>
+        </svg>
+      </div>
+      <div class="tekst">
+        <h2 id="h-content">Content generatie: Weave &amp; Claude Cowork</h2>
+        <p>Je genereert beelden en video met AI-tools zoals <mark>Weave</mark>, en leert hoe je met goede prompts een <mark>consistente stijl</mark> bewaakt. Met <mark>Claude Cowork</mark> laat je AI zelfstandig taken uitvoeren op je eigen bestanden: teksten schrijven, documenten opmaken en content plannen. Je ontdekt waar AI je werk versnelt en waar je zelf moet bijsturen.</p>
+      </div>
+    </section>
+
+    <section class="folio" id="web" aria-labelledby="h-web">
+      <div class="nummer" aria-hidden="true">
+        <span class="cijfer" data-n="05">05</span>
+        <svg class="scene scene-web" viewBox="0 0 120 120">
+          <g class="web" fill="none" stroke="#C9B6A2" stroke-width=".8" opacity=".6">
+            <path class="spaak" pathLength="1" d="M60 58L69.1 12.9M60 58L98.3 32.6M60 58L105.1 67.1M60 58L85.4 96.3M60 58L50.9 103.1M60 58L21.7 83.4M60 58L14.9 48.9M60 58L34.6 19.7"/>
+            <path class="ring r1" pathLength="1" d="M62.0 48.2Q64.2 51.7 68.3 52.5Q67.4 56.5 69.8 60.0Q66.3 62.2 65.5 66.3Q61.5 65.4 58.0 67.8Q55.8 64.3 51.7 63.5Q52.6 59.5 50.2 56.0Q53.7 53.8 54.5 49.7Q58.5 50.6 62.0 48.2"/>
+            <path class="ring r2" pathLength="1" d="M63.8 39.4Q68.0 46.1 75.8 47.5Q74.1 55.2 78.6 61.8Q71.9 66.0 70.5 73.8Q62.8 72.1 56.2 76.6Q52.0 69.9 44.2 68.5Q45.9 60.8 41.4 54.2Q48.1 50.0 49.5 42.2Q57.2 43.9 63.8 39.4"/>
+            <path class="ring r3" pathLength="1" d="M65.6 30.6Q71.8 40.4 83.3 42.5Q80.8 53.9 87.4 63.6Q77.6 69.8 75.5 81.3Q64.1 78.8 54.4 85.4Q48.2 75.6 36.7 73.5Q39.2 62.1 32.6 52.4Q42.4 46.2 44.5 34.7Q55.9 37.2 65.6 30.6"/>
+            <path class="ring r4" pathLength="1" d="M67.4 21.7Q75.7 34.8 90.8 37.6Q87.5 52.6 96.3 65.4Q83.2 73.7 80.4 88.8Q65.4 85.5 52.6 94.3Q44.3 81.2 29.2 78.4Q32.5 63.4 23.7 50.6Q36.8 42.3 39.6 27.2Q54.6 30.5 67.4 21.7"/>
+          </g>
+          <g class="spin">
+            <line x1="60" y1="-70" x2="60" y2="50" stroke="#C9B6A2" stroke-width=".7" opacity=".7"/>
+            <g fill="none" stroke="#C9B6A2" stroke-width="1.3" stroke-linejoin="round">
+              <path class="poot-l" d="M56 54L46 46L42 52M56 57L44 54L40 61M56 60L45 64L42 71M57 63L49 70L48 77"/>
+              <path class="poot-r" d="M64 54L74 46L78 52M64 57L76 54L80 61M64 60L75 64L78 71M63 63L71 70L72 77"/>
+            </g>
+            <circle cx="60" cy="52" r="4" fill="#260808" stroke="#C9B6A2" stroke-width="1.2"/>
+            <ellipse cx="60" cy="62" rx="6.5" ry="8.5" fill="#260808" stroke="#C9B6A2" stroke-width="1.2"/>
+            <path d="M57.5 58.5h5L60 62l2.5 3.5h-5L60 62z" fill="#BF1717"/>
+          </g>
+        </svg>
+      </div>
+      <div class="tekst">
+        <h2 id="h-web">Vibe coding &amp; web</h2>
+        <p>Met <mark>Claude Code</mark> bouw je websites en tools door in gewone taal te beschrijven wat je wil. Je breidt Claude uit met <mark>skills</mark>, en via de <mark>Figma MCP-koppeling</mark> laat je Claude ontwerpen genereren in Figma en designs omzetten naar HTML en CSS. Je bouwt zelfs je eigen Figma-plugin. Je websites zet je online met <mark>GitHub Pages</mark>.</p>
+      </div>
+    </section>
+
+    <section class="folio" id="mail" aria-labelledby="h-mail">
+      <div class="nummer" aria-hidden="true">
+        <span class="cijfer" data-n="06">06</span>
+        <svg class="scene scene-mail" viewBox="0 0 120 120">
+          <rect x="22" y="48" width="76" height="48" fill="#260808" stroke="#C9B6A2" stroke-width="1.5"/>
+          <path class="klep-open" d="M22 48L60 20L98 48Z" fill="#400C0C" stroke="#C9B6A2" stroke-width="1.5" stroke-linejoin="round"/>
+          <g class="brief b1"><rect x="40" y="54" width="40" height="28" fill="#C9B6A2"/><path d="M45 61h24M45 67h30M45 73h18" stroke="#731010" stroke-width="2"/></g>
+          <g class="brief b2"><rect x="40" y="54" width="40" height="28" fill="#C9B6A2"/><path d="M45 61h24M45 67h30M45 73h18" stroke="#731010" stroke-width="2"/></g>
+          <g class="brief b3"><rect x="40" y="54" width="40" height="28" fill="#C9B6A2"/><path d="M45 61h24M45 67h30M45 73h18" stroke="#731010" stroke-width="2"/></g>
+          <path d="M22 62L60 84L98 62V96H22Z" fill="#400C0C" stroke="#C9B6A2" stroke-width="1.5" stroke-linejoin="round"/>
+          <g class="klep-dicht">
+            <path d="M22 48L60 78L98 48Z" fill="#731010" stroke="#C9B6A2" stroke-width="1.5" stroke-linejoin="round"/>
+            <circle cx="60" cy="76" r="6.5" fill="#BF1717" stroke="#8C0D0D" stroke-width="1.5"/>
+            <path class="druppel" d="M58 81q-2 6 0 9q2-3 0-9z" fill="#BF1717"/>
+          </g>
+        </svg>
+      </div>
+      <div class="tekst">
+        <h2 id="h-mail">E-mailmarketing &amp; newsletters</h2>
+        <p>In <mark>MailerLite</mark> bouw je <mark>inschrijvingsformulieren</mark> die je op een website plaatst, ontwerp je e-mailcampagnes en zet je <mark>automatisatieflows</mark> op: een nieuwe inschrijver krijgt bijvoorbeeld automatisch een reeks welkomstmails. Zo leer je hoe merken hun publiek opbouwen en blijven bereiken.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="voet">
+    <p class="voet-naam">Andrea Derese</p>
+    <p class="voet-klas">DVG2-B Digitale Vormgeving</p>
+    <ul class="palet" aria-label="Kleurenpalet">
+      <li style="--kleur: #BF1717"></li>
+      <li style="--kleur: #8C0D0D"></li>
+      <li style="--kleur: #731010"></li>
+      <li style="--kleur: #400C0C"></li>
+      <li style="--kleur: #260808"></li>
+    </ul>
+  </footer>
+
+  <script src="bloed.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
