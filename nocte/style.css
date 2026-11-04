@@ -1103,6 +1103,13 @@ main { background: var(--wijn); }
 }
 .footer p { margin-left: auto; margin-right: auto; }
 .logo--big { font-size: clamp(2.6rem, 6vw, 4rem); margin-bottom: .2em; }
+/* logo als afbeelding (Andrea's logo met magenta gloed) in de menubalk en de footer */
+.logo { display: inline-flex; align-items: center; line-height: 0; }
+.logo-img { display: block; height: 58px; width: auto; transition: height .3s ease, filter .3s ease; }
+.header.is-scrolled .logo-img { height: 46px; }
+a.logo:hover .logo-img { filter: drop-shadow(0 0 10px rgba(242, 5, 179, .45)); }
+.logo--big { display: block; }
+.logo--big .logo-img { height: clamp(96px, 14vw, 150px); margin: 0 auto; }
 .footer-social {
   font-size: .78rem;
   letter-spacing: .14em;
@@ -1181,6 +1188,10 @@ main { background: var(--wijn); }
     margin: 4px 0 18px 4px;
     backdrop-filter: none;
   }
+  /* het hover-effect van de desktop (paneel schuift naar het midden) niet gebruiken in het hamburgermenu,
+     anders schuiven de parfums uit beeld zodra je erover hovert of erop tikt */
+  .has-sub:hover .sub-menu,
+  .has-sub:focus-within .sub-menu { transform: none; }
   .sub-menu::before { display: none; }
   .sub-menu a { padding: 10px 18px; }
   .menu-cta-mobile { display: block; margin-top: 24px; }
@@ -1219,6 +1230,8 @@ main { background: var(--wijn); }
 @media (max-width: 560px) {
   .wrap { padding: 0 20px; }
   .logo { font-size: 1.3rem; }
+  .logo-img { height: 48px; }
+  .header.is-scrolled .logo-img { height: 42px; }
   .hours-strip { margin-left: 20px; margin-right: 20px; flex-direction: column; align-items: flex-start; gap: 12px; }
   .hero { padding-top: 48px; padding-bottom: 48px; }
   .hours-strip { padding: 24px 0; }
@@ -1375,7 +1388,7 @@ main, .footer { overflow-x: clip; }
 }
 
 /* ---------- Acte II: foto en menukaart naast elkaar ----------
-   Klok en kicker blijven gecentreerd erboven; enkel op gsm (tot 600 px) staan foto en kaart onder elkaar. */
+   Op tablet en gsm (tot 900 px) staan foto en kaart onder elkaar. */
 .acte-pair {
   display: grid;
   grid-template-columns: minmax(0, .85fr) minmax(0, 1fr);
@@ -1387,11 +1400,12 @@ main, .footer { overflow-x: clip; }
 .acte-pair .visual--moon.visual--photo { width: 100%; max-width: 460px; margin: 0 auto; }
 .acte--2 .acte-pair .menu-card { max-width: none; margin: 0; }
 
+/* tablet en gsm (tot 900 px): foto boven, menukaart eronder, net zoals Acte I en III */
 @media (max-width: 900px) {
-  .acte-pair { gap: 32px; grid-template-columns: minmax(0, .8fr) minmax(0, 1fr); }
+  .acte-pair { grid-template-columns: 1fr; gap: 48px; }
+  .acte-pair .visual--moon.visual--photo { max-width: 440px; }
 }
 @media (max-width: 600px) {
-  .acte-pair { grid-template-columns: 1fr; gap: 48px; }
   .acte-pair .visual--moon.visual--photo { max-width: 380px; }
 }
 
@@ -1428,7 +1442,7 @@ main, .footer { overflow-x: clip; }
   gap: 22px;
   overflow-x: auto;
   overflow-y: hidden; /* enkel horizontaal schuiven: geen verticale schuifbalk, de rij blijft op gelijk niveau */
-  overscroll-behavior-y: none;
+  /* geen overscroll-behavior-y: anders blijft de pagina staan als je met de muis boven de slider naar boven of onder scrolt */
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   /* ruimte boven en onder, zodat een foto die naar voren komt niet wordt afgesneden */
@@ -1833,3 +1847,4 @@ body.lb-lock { overflow: hidden; }
 .nocte-ml .ml-form-checkboxRow { margin: 22px 0 26px !important; }
 .nocte-ml .ml-form-checkboxRow label.checkbox { display: flex !important; gap: 12px; align-items: flex-start; }
 .nocte-ml .ml-form-checkboxRow input[type="checkbox"] { width: 16px; height: 16px; margin-top: 3px; flex: 0 0 16px; }
+.led-thumb.is-landing { transition: height .2s, box-shadow .2s, left .45s cubic-bezier(.3, .7, .2, 1); } /* na het slepen glijdt het ledje naar zijn plek */
