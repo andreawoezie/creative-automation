@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NOCTE · Après Minuit</title>
+  <meta name="description" content="NOCTE · Après Minuit. Drie geuren voor één nacht. Claim je gratis sample.">
+
+  <!-- Drie lettertypes: Playfair Display (titels, kopteksten, quotes, uur 22:00), IBM Plex Serif (lopende tekst, knoppen, uur 05:00), DSEG7 (uur 00:00 en klok) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- =====================================================
+       MAILERLITE · STAP 1
+       Plak hieronder STUK 1 uit MailerLite
+       ("JavaScript snippet", begint met de woorden MailerLite Universal)
+       ===================================================== -->
+  <!-- MailerLite Universal -->
+  <script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2745972');
+  </script>
+  <!-- End MailerLite Universal -->
+  <!-- einde MailerLite stap 1 -->
+</head>
+<body>
+
+  <!-- 0. HEADER MET ANKERNAVIGATIE -->
+  <header class="header" id="header">
+    <a class="logo" href="#top" aria-label="NOCTE, naar boven">NOCTE</a>
+
+    <nav class="menu" id="menu" aria-label="Hoofdmenu">
+      <ul class="menu-list">
+        <li><a href="#verhaal" data-nav>Ons verhaal</a></li>
+        <li class="has-sub">
+          <a href="#parfums" data-nav aria-haspopup="true">Onze parfums</a>
+          <ul class="sub-menu">
+            <li><a href="#acte-1"><span class="sub-hour">22:00</span><span class="sub-name">Premier Verre<em>Acte I</em></span></a></li>
+            <li><a href="#acte-2"><span class="sub-hour">00:00</span><span class="sub-name">Pleine Lune<em>Acte II</em></span></a></li>
+            <li><a href="#acte-3"><span class="sub-hour">05:00</span><span class="sub-name">Dernier Verre<em>Acte III</em></span></a></li>
+          </ul>
+        </li>
+        <li><a href="#dansvloer" data-nav>De dansvloer</a></li>
+        <li class="menu-cta-mobile"><a href="#formulier">Claim your sample</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-right">
+      <!-- het uur verandert mee terwijl je scrolt -->
+      <span class="header-clock is-icoon" id="clock" aria-hidden="true"><svg class="klok-icoon" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path fill="currentColor" d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm68-84a12,12,0,0,1-12,12H128a12,12,0,0,1-12-12V72a12,12,0,0,1,24,0v44h44A12,12,0,0,1,196,128Z"/></svg></span>
+      <a class="btn btn--small" href="#formulier">Gratis sample</a>
+      <button class="burger" id="burger" aria-label="Menu openen" aria-expanded="false" aria-controls="menu">
+        <span></span><span></span>
+      </button>
+    </div>
+    <span class="header-progress" id="progress"></span>
+  </header>
+
+  <main id="top">
+
+    <!-- 1. HERO -->
+    <section class="hero wrap" data-hour="klok">
+      <div class="hero-text">
+        <p class="kicker">Nieuw · Drie geuren voor één nacht</p>
+        <h1>Après Minuit</h1>
+        <p class="sub">When the lights go down, you turn up.</p>
+        <p>Drie geuren, gemaakt voor de dansvloer. Zoet, intens, en onmogelijk te negeren. Kies je uur en laat de nacht jou onthouden.</p>
+        <div class="actions">
+          <a class="btn btn--fel" href="#formulier">Claim your sample</a>
+          <a class="text-link" href="#parfums">Find your hour ↓</a>
+        </div>
+      </div>
+      <figure class="visual visual--hero visual--photo">
+        <img src="media/nocte_hero_drie_modellen.jpg" alt="De drie NOCTE-modellen heffen het glas onder het roze neonbord NOCTE: een vrouw met Premier Verre in een cocktailglas, een man in wit kostuum met Pleine Lune in een whiskyglas en een barman met Dernier Verre in een wijnglas" width="768" height="1376" fetchpriority="high">
+        <span class="stamp">23:59</span>
+      </figure>
+    </section>
+
+    <!-- Strook met de drie uren (zoals de "featured in"-balk in het moodboard) -->
+    <nav class="hours-strip wrap" aria-label="De drie uren">
+      <span class="strip-label">Een nacht in drie uren</span>
+      <a href="#acte-1"><b>22:00</b> Premier Verre</a>
+      <a href="#acte-2"><b>00:00</b> Pleine Lune</a>
+      <a href="#acte-3"><b>05:00</b> Dernier Verre</a>
+    </nav>
+
+    <!-- 2. VERHAAL: HET MERK NOCTE -->
+    <section class="story" id="verhaal" data-hour="klok">
+      <div class="split wrap">
+        <figure class="visual visual--photo">
+          <img src="media/nocte_verhaal_dansvloer.jpg" alt="Een volle dansvloer onder een discobal: dansende mensen met de handen in de lucht, bordeaux gordijnen en vonkjes licht" width="768" height="1376" loading="lazy">
+        </figure>
+        <div class="story-text">
+          <p class="kicker">Wie is NOCTE</p>
+          <h2>Draag de nacht</h2>
+          <p class="sub">Born after dark. Made for the dancefloor.</p>
+          <p>NOCTE komt van <em>nox</em>, het Latijnse woord voor nacht. Want daar begint het voor ons: als de lichten dimmen, de bas inzet en de dansvloer volloopt. Op dat moment wil je niet verdwijnen in de massa. Je wil dat ze je opmerken, nog voor je iets gezegd hebt.</p>
+          <p>Daarom maken we geen zachte parfums voor overdag. NOCTE is zoet, warm en intens, met een spoor dat blijft hangen. Iemand ruikt je als je voorbijdanst en draait zich om. En de volgende ochtend ruiken ze je nog op hun jas.</p>
+          <p>Een uitgaansavond verloopt in hoofdstukken. Fris aan de bar, wild om middernacht, warm en loom als de zon opkomt. Daarom maakten we niet één geur, maar drie. Eén voor elk uur van de nacht.</p>
+        </div>
+      </div>
+      <blockquote class="quote">
+        <!-- achtergrondvideo: de vloedgolf-video uit Google Flow (21:9, zonder geluid, in een lus) -->
+        <video class="quote-video" autoplay muted loop playsinline preload="metadata"
+               poster="media/nocte_video_vloedgolven_flow_21x9_poster.jpg" aria-hidden="true">
+          <source src="media/nocte_video_vloedgolven_flow_21x9_web.webm" type="video/webm">
+          <source src="media/nocte_video_vloedgolven_flow_21x9_web.mp4" type="video/mp4">
+        </video>
+        <p><span class="quote-l1">Last one to leave.</span> <span class="quote-l2">First one they remember.</span></p>
+      </blockquote>
+    </section>
+
+    <!-- 3. ONZE PARFUMS: intro; daarna elk parfum een eigen sectie met eigen foto en eigen menukaart -->
+    <section class="parfums" id="parfums" data-hour="klok">
+      <!-- bewegende rookmist als achtergrond (WebGL in script.js); de vier CSS-lagen eronder zijn de reserve als WebGL niet werkt -->
+      <div class="parfums-mist" aria-hidden="true">
+        <canvas class="pm-rook"></canvas>
+        <span class="pm pm--rechts"></span>
+        <span class="pm pm--onder"></span>
+        <span class="pm pm--schuin-onder"></span>
+        <span class="pm pm--schuin-boven"></span>
+      </div>
+      <div class="wrap">
+        <header class="section-head">
+          <p class="kicker">Een nacht in drie uren</p>
+          <h2>Quelle Heure?</h2>
+          <p class="sub">Three hours. Three scents. Which one are you?</p>
+          <p>Elke geur hoort bij een moment van de avond. Draag het uur dat bij jou past, of wissel ze af zoals je de nacht beleeft.</p>
+        </header>
+        <span class="carte-ornament" aria-hidden="true">✦</span>
+      </div>
+    </section>
+
+    <!-- 3a. ACTE I · 22:00 · fris, licht, de bar -->
+    <section class="acte acte--1" id="acte-1" data-hour="22:00">
+      <div class="acte-grid wrap">
+        <figure class="visual visual--portrait visual--photo">
+          <img src="media/nocte_acte1_2200_cocktailglas.jpg" alt="NOCTE Premier Verre in een cocktailglas met crushed ijs, munt, citroengras en sinaasappel op een zwarte marmeren bar" width="768" height="1376" loading="lazy">
+          <span class="stamp">22:00</span>
+        </figure>
+        <div class="carte menu-card" style="--act: var(--olijf)">
+          <div class="carte-inner">
+            <p class="carte-kicker">NOCTE · La Carte · Acte I</p>
+            <svg class="glass" viewBox="0 0 48 64" aria-hidden="true"><path d="M6 8h36L24 30z"/><path d="M24 30v24M14 56h20"/><path d="M33 4l-6 14"/><circle cx="34" cy="11" r="3"/></svg>
+            <p class="mc-hour">22:00</p>
+            <h3>Premier Verre</h3>
+            <p class="sub">Citrus &amp; mint, served at ten.</p>
+            <span class="carte-ornament" aria-hidden="true">✦</span>
+            <p class="mc-desc">Citroengras, munt en een zoete twist van sinaasappel. De geur van de eerste cocktail, het moment dat iedereen binnenkomt en de avond nog alle kanten op kan. Fris, sprankelend, en net zoet genoeg om iemand dichterbij te lokken.</p>
+            <p class="mc-label">Ingrediënten</p>
+            <ul class="mc-notes"><li>Citroengras</li><li>Munt</li><li>Sinaasappel</li></ul>
+            <p class="carte-glass">Geserveerd in een cocktailglas</p>
+            <a class="btn" href="#sample">Find your hour</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3b. ACTE II · 00:00 · donker, maan, middernacht -->
+    <section class="acte acte--2" id="acte-2" data-hour="00:00">
+      <div class="moon" aria-hidden="true"></div>
+      <div class="wrap acte-center">
+        <!-- foto en menukaart naast elkaar (op gsm onder elkaar) -->
+        <div class="acte-pair">
+        <figure class="visual visual--moon visual--photo">
+          <img src="media/nocte_acte2_0000_whiskyglas.jpg" alt="NOCTE Pleine Lune in een whiskyglas on the rocks op een koperen dienblad, met passievrucht en inkt, op een terras bij volle maan" width="768" height="1376" loading="lazy">
+          <span class="stamp">00:00</span>
+        </figure>
+        <div class="carte menu-card" style="--act: var(--paars)">
+          <div class="carte-inner">
+            <p class="carte-kicker">NOCTE · La Carte · Acte II</p>
+            <svg class="glass" viewBox="0 0 48 64" aria-hidden="true"><path d="M10 14h28l-3 40H13z"/><path d="M12 30h24"/><rect x="17" y="34" width="8" height="8" transform="rotate(12 21 38)"/><rect x="25" y="40" width="7" height="7" transform="rotate(-10 28 43)"/></svg>
+            <p class="mc-hour">00:00</p>
+            <h3>Pleine Lune</h3>
+            <p class="sub">Smoke, spice &amp; passion at midnight.</p>
+            <span class="carte-ornament" aria-hidden="true">✦</span>
+            <p class="mc-desc">Passievrucht, kruidnagel, houtskool en een druppel inkt. Klokslag twaalf wordt het donker, zoet en heet. Voor wie midden op de dansvloer staat als de drop valt, en weet dat alle ogen op hem of haar gericht zijn.</p>
+            <p class="mc-label">Ingrediënten</p>
+            <ul class="mc-notes"><li>Passievrucht</li><li>Kruidnagel</li><li>Houtskool</li><li>Inkt</li></ul>
+            <p class="carte-glass">Geserveerd in een whiskyglas, on the rocks</p>
+            <a class="btn" href="#sample">Find your hour</a>
+          </div>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3c. ACTE III · 05:00 · warm, dageraad, het laatste glas -->
+    <section class="acte acte--3" id="acte-3" data-hour="05:00">
+      <div class="acte-grid acte-grid--reverse wrap">
+        <div class="carte menu-card" style="--act: var(--rood)">
+          <div class="carte-inner">
+            <p class="carte-kicker">NOCTE · La Carte · Acte III</p>
+            <svg class="glass" viewBox="0 0 48 64" aria-hidden="true"><path d="M13 6h22c1 12-3 22-11 22S12 18 13 6z"/><path d="M14 16h20"/><path d="M24 28v26M14 56h20"/></svg>
+            <p class="mc-hour">05:00</p>
+            <h3>Dernier Verre</h3>
+            <p class="sub">Berry, smoke &amp; spice until dawn.</p>
+            <span class="carte-ornament" aria-hidden="true">✦</span>
+            <p class="mc-desc">Zwarte bes, bergamot, wierook, ambergris en kaneel. De geur van het laatste glas, als de lichten aangaan en niemand naar huis wil. Warm, zoet en diep. Het feest is voorbij, jouw geur nog lang niet.</p>
+            <p class="mc-label">Ingrediënten</p>
+            <ul class="mc-notes"><li>Zwarte bes</li><li>Bergamot</li><li>Wierook</li><li>Ambergris</li><li>Kaneel</li></ul>
+            <p class="carte-glass">Geserveerd in een wijnglas</p>
+            <a class="btn" href="#sample">Find your hour</a>
+          </div>
+        </div>
+        <figure class="visual visual--portrait visual--photo">
+          <img src="media/nocte_acte3_0500_wijnglas.jpg" alt="NOCTE Dernier Verre, zwart flesje in een wijnglas met rode wijn, zwarte bessen, kaneel en wierook, aan de bar bij dageraad" width="768" height="1376" loading="lazy">
+          <!-- animatie over de foto (zelfde foto, enkel op de rook en het raam zacht vervormd):
+               zo bewegen de echte rook en het echte gordijn, met dezelfde ruis en vintage look -->
+          <svg class="fx-svg" viewBox="0 0 768 1376" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+            <defs>
+              <radialGradient id="zacht">
+                <stop offset=".45" stop-color="#fff"/>
+                <stop offset="1" stop-color="#000"/>
+              </radialGradient>
+              <mask id="m-rook" maskUnits="userSpaceOnUse" x="0" y="0" width="768" height="1376">
+                <rect x="440" y="262" width="125" height="185" fill="url(#zacht)"/>
+              </mask>
+              <mask id="m-raam" maskUnits="userSpaceOnUse" x="0" y="0" width="768" height="1376">
+                <rect x="10" y="110" width="300" height="580" fill="url(#zacht)"/>
+              </mask>
+
+              <!-- rook: de ruis schuift traag omhoog, waardoor de rook stijgt en kronkelt.
+                   Twee lagen die elkaar afwisselen (de ene verschijnt terwijl de andere verdwijnt).
+                   Een laag springt enkel terug naar het begin op het moment dat ze onzichtbaar is,
+                   dus je ziet nooit een sprong. Eén ronde = 24 s. -->
+              <filter id="rook-a" filterUnits="userSpaceOnUse" x="410" y="240" width="185" height="400">
+                <feTurbulence type="fractalNoise" baseFrequency="0.014 0.022" numOctaves="1" seed="7" result="ruis"/>
+                <feOffset in="ruis" result="stroom">
+                  <animate attributeName="dy" values="0;-160" dur="24s" repeatCount="indefinite"/>
+                  <animate attributeName="dx" values="0;10;0" dur="24s" calcMode="spline" keyTimes="0;.5;1" keySplines=".45 0 .55 1;.45 0 .55 1" repeatCount="indefinite"/>
+                </feOffset>
+                <feDisplacementMap in="SourceGraphic" in2="stroom" scale="16" xChannelSelector="R" yChannelSelector="G"/>
+              </filter>
+              <filter id="rook-b" filterUnits="userSpaceOnUse" x="410" y="240" width="185" height="400">
+                <feTurbulence type="fractalNoise" baseFrequency="0.014 0.022" numOctaves="1" seed="21" result="ruis"/>
+                <feOffset in="ruis" result="stroom">
+                  <animate attributeName="dy" values="-80;-160;0;-80" keyTimes="0;.5;.5;1" dur="24s" repeatCount="indefinite"/>
+                  <animate attributeName="dx" values="0;-10;0" dur="24s" calcMode="spline" keyTimes="0;.5;1" keySplines=".45 0 .55 1;.45 0 .55 1" repeatCount="indefinite"/>
+                </feOffset>
+                <feDisplacementMap in="SourceGraphic" in2="stroom" scale="16" xChannelSelector="R" yChannelSelector="G"/>
+              </filter>
+
+              <!-- gordijn: zachte plooien die heen en weer waaien; eindigt exact waar het begint. Eén ronde = 20 s. -->
+              <filter id="wind" filterUnits="userSpaceOnUse" x="0" y="100" width="420" height="600">
+                <feTurbulence type="fractalNoise" baseFrequency="0.016 0.003" numOctaves="1" seed="3" result="ruis"/>
+                <feOffset in="ruis" result="golf">
+                  <animate attributeName="dx" values="0;-70;0" dur="20s" calcMode="spline" keyTimes="0;.5;1" keySplines=".45 0 .55 1;.45 0 .55 1" repeatCount="indefinite"/>
+                </feOffset>
+                <feDisplacementMap in="SourceGraphic" in2="golf" scale="6" xChannelSelector="R" yChannelSelector="G">
+                  <animate attributeName="scale" values="5;10;6;11;5" keyTimes="0;.25;.5;.75;1" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1;.45 0 .55 1;.45 0 .55 1" dur="20s" repeatCount="indefinite"/>
+                </feDisplacementMap>
+              </filter>
+            </defs>
+
+            <g mask="url(#m-raam)">
+              <image href="media/nocte_acte3_0500_wijnglas.jpg" width="768" height="1376" filter="url(#wind)"/>
+            </g>
+            <g mask="url(#m-rook)">
+              <image href="media/nocte_acte3_0500_wijnglas.jpg" width="768" height="1376" filter="url(#rook-a)">
+                <animate attributeName="opacity" values="0;1;0" dur="24s" repeatCount="indefinite"/>
+              </image>
+              <image href="media/nocte_acte3_0500_wijnglas.jpg" width="768" height="1376" filter="url(#rook-b)">
+                <animate attributeName="opacity" values="1;0;1" dur="24s" repeatCount="indefinite"/>
+              </image>
+            </g>
+          </svg>
+          <span class="stamp">05:00</span>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 4. TUSSENSTUK: OP DE DANSVLOER -->
+    <section class="floor" id="dansvloer" data-hour="klok">
+      <!-- slider met de Instagramposts: hover = foto komt naar voren, klik = foto in het groot -->
+      <div class="slider" role="region" aria-label="NOCTE op Instagram">
+        <div class="slider-head wrap">
+          <p class="kicker">Op Instagram · @nocte</p>
+          <div class="slider-nav">
+            <button class="slider-btn" type="button" data-dir="-1" aria-label="Vorige foto's">&larr;</button>
+            <button class="slider-btn" type="button" data-dir="1" aria-label="Volgende foto's">&rarr;</button>
+          </div>
+        </div>
+        <ul class="slider-track">
+          <li><button class="slide" type="button" data-full="media/socials/nocte-post-01-approche-toi.jpg" data-caption="Approche-Toi" aria-label="Bekijk Approche-Toi in het groot"><img src="media/socials/nocte-post-01-approche-toi-klein.jpg" alt="Instagrampost Approche-Toi: Too close is just right for us" width="560" height="560" loading="lazy"></button></li>
+          <li><button class="slide" type="button" data-full="media/socials/nocte-post-02-trois-heures.jpg" data-caption="Trois Heures" aria-label="Bekijk Trois Heures in het groot"><img src="media/socials/nocte-post-02-trois-heures-klein.jpg" alt="Instagrampost Trois Heures: Three hours. Three scents. One" width="560" height="560" loading="lazy"></button></li>
+          <li><button class="slide" type="button" data-full="media/socials/nocte-post-03-eclat-citron.jpg" data-caption="Éclat Citron" aria-label="Bekijk Éclat Citron in het groot"><img src="media/socials/nocte-post-03-eclat-citron-klein.jpg" alt="Instagrampost Éclat Citron: Fresh at first. Wild later on." width="560" height="560" loading="lazy"></button></li>
+          <li><button class="slide" type="button" data-full="media/socials/nocte-post-04-disco-minuit.jpg" data-caption="Disco Minuit" aria-label="Bekijk Disco Minuit in het groot"><img src="media/socials/nocte-post-04-disco-minuit-klein.jpg" alt="Instagrampost Disco Minuit: Glow in the dark, all night on" width="560" height="560" loading="lazy"></button></li>
+          <li><button class="slide" type="button" data-full="media/socials/nocte-post-05-nuit-entiere.jpg" data-caption="Nuit Entière" aria-label="Bekijk Nuit Entière in het groot"><img src="media/socials/nocte-post-05-nuit-entiere-klein.jpg" alt="Instagrampost Nuit Entière: Dance till dawn, stay to noon." width="560" height="560" loading="lazy"></button></li>
+          <li><button class="slide" type="button" data-full="media/socials/nocte-post-06-soeurs-de-bar.jpg" data-caption="Sœurs de Bar" aria-label="Bekijk Sœurs de Bar in het groot"><img src="media/socials/nocte-post-06-soeurs-de-bar-klein.jpg" alt="Instagrampost Sœurs de Bar: Tag the friend you party with." width="560" height="560" loading="lazy"></button></li>
+          <li><button class="slide" type="button" data-full="media/socials/nocte-post-07-nuit-blanche.jpg" data-caption="Nuit Blanche" aria-label="Bekijk Nuit Blanche in het groot"><img src="media/socials/nocte-post-07-nuit-blanche-klein.jpg" alt="Instagrampost Nuit Blanche: Last one out, first remembered" width="560" height="560" loading="lazy"></button></li>
+          <li><button class="slide" type="button" data-full="media/socials/nocte-post-08-sans-hesiter.jpg" data-caption="Sans Hésiter" aria-label="Bekijk Sans Hésiter in het groot"><img src="media/socials/nocte-post-08-sans-hesiter-klein.jpg" alt="Instagrampost Sans Hésiter: Wear it like you truly mean it" width="560" height="560" loading="lazy"></button></li>
+          <li><button class="slide" type="button" data-full="media/socials/nocte-post-09-dans-ton-cou.jpg" data-caption="Dans Ton Cou" aria-label="Bekijk Dans Ton Cou in het groot"><img src="media/socials/nocte-post-09-dans-ton-cou-klein.jpg" alt="Instagrampost Dans Ton Cou: Close enough to be remembered." width="560" height="560" loading="lazy"></button></li>
+          <li><button class="slide" type="button" data-full="media/socials/nocte-post-10-bientot-ici.jpg" data-caption="Bientôt, ici" aria-label="Bekijk Bientôt, ici in het groot"><img src="media/socials/nocte-post-10-bientot-ici-klein.jpg" alt="Instagrampost Bientôt, ici: A new name lights up the dark." width="560" height="560" loading="lazy"></button></li>
+          <li><button class="slide" type="button" data-full="media/socials/nocte-post-11-sans-sommeil.jpg" data-caption="Sans Sommeil" aria-label="Bekijk Sans Sommeil in het groot"><img src="media/socials/nocte-post-11-sans-sommeil-klein.jpg" alt="Instagrampost Sans Sommeil: Who needs sleep, wearing this?" width="560" height="560" loading="lazy"></button></li>
+          <li><button class="slide" type="button" data-full="media/socials/nocte-post-12-acte-dernier.jpg" data-caption="Acte Dernier" aria-label="Bekijk Acte Dernier in het groot"><img src="media/socials/nocte-post-12-acte-dernier-klein.jpg" alt="Instagrampost Acte Dernier: The last glass is the best one" width="560" height="560" loading="lazy"></button></li>
+          <li><button class="slide" type="button" data-full="media/socials/nocte-post-13-un-geste-vif.jpg" data-caption="Un Geste Vif" aria-label="Bekijk Un Geste Vif in het groot"><img src="media/socials/nocte-post-13-un-geste-vif-klein.jpg" alt="Instagrampost Un Geste Vif: One spray. The night is yours." width="560" height="560" loading="lazy"></button></li>
+          <li><button class="slide" type="button" data-full="media/socials/nocte-post-14-apres-soiree.jpg" data-caption="Après Soirée" aria-label="Bekijk Après Soirée in het groot"><img src="media/socials/nocte-post-14-apres-soiree-klein.jpg" alt="Instagrampost Après Soirée: The party ends, but you don&#x27;t." width="560" height="560" loading="lazy"></button></li>
+          <li><button class="slide" type="button" data-full="media/socials/nocte-post-15-lune-dencre.jpg" data-caption="Lune d&#x27;Encre" aria-label="Bekijk Lune d&#x27;Encre in het groot"><img src="media/socials/nocte-post-15-lune-dencre-klein.jpg" alt="Instagrampost Lune d&#x27;Encre: Something moves under the moon" width="560" height="560" loading="lazy"></button></li>
+          <li><button class="slide" type="button" data-full="media/socials/nocte-post-16-laube-noire.jpg" data-caption="L&#x27;Aube Noire" aria-label="Bekijk L&#x27;Aube Noire in het groot"><img src="media/socials/nocte-post-16-laube-noire-klein.jpg" alt="Instagrampost L&#x27;Aube Noire: It stays when the music stops." width="560" height="560" loading="lazy"></button></li>
+        </ul>
+        <!-- eigen schuifbalk als ledlamp: flikkert bij hover, gloeit harder als je hem vastneemt (script.js) -->
+        <div class="slider-led-wrap wrap" aria-hidden="true">
+          <div class="slider-led"><span class="led-thumb"></span></div>
+        </div>
+      </div>
+      <div class="floor-grid wrap">
+        <div class="floor-intro">
+          <p class="kicker">Voor de dansvloer gemaakt</p>
+          <h2>Corps à Corps</h2>
+          <p class="sub">Closer than you planned.</p>
+          <p>Eén spray in je hals, één op je pols. Meer heb je niet nodig. NOCTE is gemaakt om op te vallen tussen zweet, rook en stroboscoop, en blijft hangen tot lang na de laatste plaat.</p>
+        </div>
+        <ul class="proofs">
+          <li><span class="proof-title">Intens</span><span>blijft hangen tot de ochtend</span></li>
+          <li><span class="proof-title">Zoet</span><span>maar nooit braaf</span></li>
+          <li><span class="proof-title">Drie uren</span><span>één voor elk moment van de nacht</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 5. CTA: GRATIS SAMPLE (FORMULIER) -->
+    <section class="sample" id="sample" data-hour="klok">
+      <div class="split split--reverse wrap">
+        <figure class="visual visual--photo visual--ingang">
+          <img src="media/nocte_sample_ingang.jpg" alt="De ingang van NOCTE bij nacht: roze neonletters boven een zwarte dubbele deur, lantaarns, fluwelen koorden en een rode loper onder de volle maan" width="768" height="1376" loading="lazy">
+          <!-- animatie over de foto: de foto zelf blijft onaangeroerd -->
+          <div class="ingang-fx" aria-hidden="true">
+            <span class="neon-glow"></span>
+            <span class="neon-dim"></span>
+            <span class="neon-floor"></span>
+            <span class="mist mist--1"></span>
+            <span class="mist mist--2"></span>
+          </div>
+        </figure>
+        <div class="sample-text">
+          <p class="kicker">Gratis sample</p>
+          <h2>Ce Soir</h2>
+          <p class="sub">Make the night remember you.</p>
+          <p>Benieuwd welk uur bij jou past? Schrijf je in en we sturen je gratis een sample, net op tijd voor je volgende avond uit. Je hoort ook als eerste over nieuwe geuren en uitnodigingen voor de nacht.</p>
+
+          <!-- =====================================================
+               MAILERLITE · STAP 2
+               Vervang het vak hieronder (de hele <div class="form-plek">…</div>)
+               door STUK 2 uit MailerLite
+               (bv. <div class="ml-embedded" data-form="xxxxx"></div>)
+               ===================================================== -->
+          <!-- anker: de knoppen "Claim your sample" / "Gratis sample" scrollen hierheen. Laat deze div staan. -->
+          <div class="form-anker" id="formulier">
+          <div class="nocte-ml">
+            <div class="ml-embedded" data-form="OY27YH"></div>
+          </div>
+          </div>
+          <!-- einde MailerLite stap 2 -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 6. FOOTER -->
+  <footer class="footer">
+    <div class="wrap">
+      <p class="logo logo--big">NOCTE</p>
+      <p class="sub">Draag de nacht.</p>
+      <p class="footer-social">Volg de nacht op Instagram · @nocte · #NOCTE #AprèsMinuit</p>
+      <p class="small">Privacybeleid · Schoolproject Creative Automation · Artevelde Hogeschool · 2026</p>
+    </div>
+  </footer>
+
+  <!-- grote weergave van een foto uit de slider -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Foto in het groot" hidden>
+    <button class="lb-btn lb-close" type="button" aria-label="Sluiten">&times;</button>
+    <button class="lb-btn lb-prev" type="button" aria-label="Vorige foto">&lsaquo;</button>
+    <figure class="lb-figure">
+      <img class="lb-img" src="" alt="">
+      <figcaption class="lb-cap"></figcaption>
+    </figure>
+    <button class="lb-btn lb-next" type="button" aria-label="Volgende foto">&rsaquo;</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

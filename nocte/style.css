@@ -1,0 +1,1835 @@
+/* =========================================================
+   NOCTE · onepage "Après Minuit"
+   Kleuren en typografie volgens guidelines/design-guidelines.md
+   Layout gebaseerd op "One page layout moodboard"
+   (Mon Cherie: donker bordeaux, dunne lijnen, gesplitste blokken;
+    Byredo: lichte productkaarten, tabbalk, veel witruimte)
+   ========================================================= */
+
+/* DSEG7 Classic (digitale klok, OFL-licentie) staat lokaal in fonts/ */
+@font-face {
+  font-family: "DSEG7-Classic";
+  src: url("fonts/DSEG7Classic-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* palet (moodboard v2) */
+  --bordeaux: #8A384D;
+  --noir: #202020;
+  --wit: #EADCE2;      /* geen puur wit: lichte tint van het bordeaux voor tekst */
+  /* afgeleide tinten van het bordeaux voor de donkere vlakken */
+  --wijn: #2E1219;
+  --wijn-2: #3B1822;
+  /* kleurenpalet Andrea (Adobe Color, 30-10-2026) */
+  --magenta: #F205B3;  /* kopteksten, links, subtitels, actieve menu-items */
+  --paars: #9704BF;    /* CTA bij hover, maangloed 00:00, voortgangslijn */
+  --olijf: #4F5902;    /* accent Acte I · 22:00 (fris, munt, citroengras) */
+  --rood: #D90404;     /* uurstempels en klok (LED), accent Acte III · 05:00 */
+  /* uurstempel: nu in het rood uit het palet i.p.v. oranje #FF7A2E */
+  --stempel: var(--rood);
+
+  --lijn: rgba(246, 246, 246, .18);
+  --tekst-zacht: rgba(246, 246, 246, .72);
+
+  /* maximaal drie lettertypes (keuze Andrea, 30-10-2026) */
+  --serif: "Playfair Display", Georgia, serif;             /* titels, kopteksten, quotes, uur 22:00 */
+  --sans: "IBM Plex Serif", Georgia, serif;                /* lopende tekst, labels, uur 05:00 */
+  --cta: "IBM Plex Serif", Georgia, serif;                 /* knoppen */
+  --klok: "DSEG7-Classic", "Courier New", monospace;       /* uur 00:00, header-klok */
+
+  --breed: 1200px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--noir);
+  color: var(--wit);
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+
+.wrap {
+  width: 100%;
+  max-width: var(--breed);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ---------- Typografie ---------- */
+
+h1, h2, h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  line-height: 1.05;
+  margin: 0 0 .3em;
+  letter-spacing: -.01em;
+}
+h1 { font-size: clamp(3.2rem, 8vw, 6.5rem); }
+h2 { font-size: clamp(2.4rem, 5vw, 4rem); }
+h3 { font-size: clamp(1.7rem, 2.4vw, 2.1rem); }
+
+.kicker {
+  font-family: var(--serif);
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  margin: 0 0 1.4em;
+  color: var(--magenta);
+}
+
+.sub {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+  line-height: 1.4;
+  margin: 0 0 1.4em;
+  color: var(--magenta);
+}
+em { color: var(--magenta); }
+
+p { margin: 0 0 1.1em; max-width: 34em; }
+
+/* ---------- Knoppen (CTA) ----------
+   Verloop bordeaux → paars met magenta rand, tekst in IBM Plex Serif
+   (keuze Andrea, guidelines entry 04/05) */
+
+.btn {
+  display: inline-block;
+  font-family: var(--cta);
+  font-size: .85rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--wit);
+  background: linear-gradient(120deg, var(--bordeaux), var(--paars));
+  background-size: 200% 100%;
+  background-position: 0 0;
+  padding: 1em 2.2em;
+  border: 1px solid var(--magenta);
+}
+.btn:hover {
+  background-position: 100% 0;
+  border-color: var(--magenta);
+  color: var(--wit);
+  box-shadow: 0 0 28px rgba(242, 5, 179, .45);
+}
+.btn { transition: background-position .5s, color .25s, border-color .25s, box-shadow .25s; }
+
+
+
+.btn--block { display: block; text-align: center; }
+
+/* felle CTA bovenaan (hero): magenta → paars uit het palet, met een zachte magenta gloed die ademt */
+.btn--fel {
+  font-weight: 500;
+  color: #F7EEF2;
+  text-shadow: 0 1px 2px rgba(46, 18, 25, .55);
+  background: linear-gradient(120deg, var(--magenta) 0%, #C204BA 45%, var(--paars) 100%);
+  background-size: 200% 100%;
+  border-color: #FF4FCB;
+  box-shadow: 0 0 22px rgba(242, 5, 179, .55), inset 0 0 0 1px rgba(255, 255, 255, .08);
+  animation: cta-gloed 2.8s ease-in-out infinite;
+}
+.btn--fel:hover {
+  color: #F7EEF2;
+  border-color: #FF4FCB;
+  box-shadow: 0 0 40px rgba(242, 5, 179, .8), 0 0 80px rgba(151, 4, 191, .45);
+}
+@keyframes cta-gloed {
+  0%, 100% { box-shadow: 0 0 18px rgba(242, 5, 179, .45), inset 0 0 0 1px rgba(255, 255, 255, .08); }
+  50%      { box-shadow: 0 0 34px rgba(242, 5, 179, .75), inset 0 0 0 1px rgba(255, 255, 255, .08); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn--fel { animation: none; }
+}
+
+.text-link {
+  font-family: var(--cta);
+  font-size: .85rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: 1px solid var(--magenta);
+  padding-bottom: 4px;
+  transition: color .25s;
+}
+.text-link:hover { color: var(--magenta); }
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 28px;
+  margin-top: 2.2em;
+}
+
+/* ---------- Plaatshouders voor beelden ---------- */
+
+.visual {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 6px;
+  background:
+    radial-gradient(120% 90% at 30% 20%, rgba(138, 56, 77, .55), transparent 60%),
+    radial-gradient(80% 70% at 80% 90%, rgba(151, 4, 191, .18), transparent 60%),
+    #171012;
+  display: flex;
+  align-items: flex-end;
+}
+.visual img, .visual video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.visual--hero { aspect-ratio: 4 / 5; }
+.visual--square { aspect-ratio: 1 / 1; }
+.visual--portrait { aspect-ratio: 4 / 5; }
+.visual--wide { aspect-ratio: 21 / 9; border-radius: 0; }
+/* productfoto's van de aktes: staand 9:16 met filmrand, dus het hele beeld tonen */
+.visual--photo { aspect-ratio: 768 / 1376; border-radius: 2px; }
+.visual--photo .stamp { right: 9%; bottom: 5%; }
+.visual--moon.visual--photo { aspect-ratio: 768 / 1376; width: min(380px, 100%); }
+/* hero-foto: zo hoog als het scherm toelaat, zodat de hele foto meteen in beeld is */
+.visual--hero.visual--photo { height: min(calc(100vh - 150px), 880px); width: auto; max-width: 100%; justify-self: center; }
+
+.ph {
+  position: relative;
+  margin: 20px;
+  font-size: .72rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(246, 246, 246, .55);
+  max-width: 26em;
+}
+
+/* uurstempel rechtsonder, zoals op de campagnebeelden */
+.stamp {
+  position: absolute;
+  right: 18px;
+  bottom: 14px;
+  font-family: var(--klok);
+  font-size: 1.1rem;
+  color: var(--stempel);
+  text-shadow: 0 0 8px rgba(217, 4, 4, .8), 0 0 2px rgba(255, 80, 80, .9);
+  letter-spacing: .05em;
+}
+
+/* ---------- Header met ankernavigatie ---------- */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 24px;
+  padding: 18px 32px;
+  background: linear-gradient(to bottom, rgba(32, 32, 32, .85), rgba(46, 18, 25, .7));
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid var(--lijn);
+  transition: padding .3s, background .3s;
+}
+.header.is-scrolled {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background: rgba(20, 10, 13, .9);
+}
+
+.logo {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  letter-spacing: .32em;
+  text-decoration: none;
+  margin: 0;
+}
+
+.menu-list {
+  list-style: none;
+  display: flex;
+  gap: 40px;
+  margin: 0;
+  padding: 0;
+}
+.menu-list > li { position: relative; }
+.menu-list > li > a {
+  position: relative;
+  display: inline-block;
+  padding: 8px 0;
+  font-size: .72rem;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--tekst-zacht);
+  transition: color .25s;
+}
+/* lijn die van het midden open schuift */
+.menu-list > li > a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--magenta);
+  transform: scaleX(0);
+  transition: transform .35s ease;
+}
+.menu-list > li > a:hover,
+.menu-list > li > a.is-active { color: var(--wit); }
+.menu-list > li > a:hover::after,
+.menu-list > li > a.is-active::after { transform: scaleX(1); }
+
+.has-sub > a::before {
+  content: "";
+  position: absolute;
+  right: -14px;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: translateY(-70%) rotate(45deg);
+}
+
+/* uitklapmenu met de drie aktes */
+.sub-menu {
+  list-style: none;
+  position: absolute;
+  top: calc(100% + 18px);
+  left: 50%;
+  min-width: 300px;
+  margin: 0;
+  padding: 10px 0;
+  background: rgba(20, 10, 13, .96);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--lijn);
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, -8px);
+  transition: opacity .3s, transform .3s, visibility .3s;
+}
+.sub-menu::before { /* brug zodat het menu niet sluit tussen link en paneel */
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -20px;
+  height: 20px;
+}
+.has-sub:hover .sub-menu,
+.has-sub:focus-within .sub-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+.sub-menu a {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  padding: 14px 24px;
+  text-decoration: none;
+  transition: background .25s;
+}
+.sub-menu a:hover { background: rgba(138, 56, 77, .45); }
+.sub-menu a:hover .sub-name { color: var(--magenta); }
+.sub-hour {
+  font-family: var(--klok);
+  font-size: .8rem;
+  color: var(--stempel);
+}
+.sub-name {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  line-height: 1.2;
+}
+.sub-name em {
+  font-family: var(--sans);
+  font-style: normal;
+  font-size: .62rem;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--tekst-zacht);
+  margin-top: 4px;
+}
+
+.menu-cta-mobile { display: none; }
+
+.header-right {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+.header-clock {
+  font-family: var(--klok);
+  font-size: .8rem;
+  color: var(--stempel);
+  text-shadow: 0 0 10px rgba(217, 4, 4, .8), 0 0 2px rgba(255, 80, 80, .9);
+  animation: blink 2.4s steps(1) infinite;
+}
+.header-clock.tick { animation: tick .6s ease, blink 2.4s steps(1) .6s infinite; }
+@keyframes tick {
+  from { opacity: 0; filter: blur(4px); }
+  to   { opacity: 1; filter: blur(0); }
+}
+@keyframes blink {
+  0%, 92% { opacity: 1; }
+  96% { opacity: .35; }
+}
+
+.btn--small { padding: .75em 1.4em; font-size: .72rem; }
+
+.burger {
+  display: none;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  position: relative;
+}
+.burger span {
+  position: absolute;
+  left: 9px;
+  right: 9px;
+  height: 1px;
+  background: var(--wit);
+  transition: transform .35s, top .35s;
+}
+.burger span:first-child { top: 16px; }
+.burger span:last-child { top: 24px; }
+.is-open .burger span:first-child { top: 20px; transform: rotate(45deg); }
+.is-open .burger span:last-child { top: 20px; transform: rotate(-45deg); }
+
+/* dunne oranje lijn die toont hoe ver je in de nacht zit */
+.header-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: linear-gradient(to right, var(--bordeaux), var(--magenta), var(--paars));
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+section[id] { scroll-margin-top: 70px; }
+
+/* ---------- 1. Hero ---------- */
+
+main { background: var(--wijn); }
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 64px;
+  align-items: center;
+  padding-top: 72px;
+  padding-bottom: 72px;
+}
+
+/* strook met de drie uren */
+.hours-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-top: 26px;
+  padding-bottom: 26px;
+  border-top: 1px solid var(--lijn);
+  border-bottom: 1px solid var(--lijn);
+  /* nooit tegen de schermrand, ook niet op een liggende tablet */
+  max-width: min(calc(var(--breed) - 64px), calc(100% - 64px));
+  padding-left: 0;
+  padding-right: 0;
+}
+.strip-label {
+  font-size: .72rem;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--tekst-zacht);
+  padding-right: 24px;
+  border-right: 1px solid var(--lijn);
+}
+.hours-strip a {
+  font-family: var(--serif);
+  font-size: clamp(1.1rem, 2vw, 1.6rem);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.hours-strip b {
+  font-family: var(--klok);
+  font-weight: 400;
+  font-size: .7em;
+  color: var(--stempel);
+  margin-right: .5em;
+}
+.hours-strip a { transition: color .25s; }
+.hours-strip a:hover { color: var(--magenta); }
+
+/* uren in de strook en het uitklapmenu: elk uur zijn eigen lettertype */
+.hours-strip a:nth-of-type(1) b,
+.sub-menu li:nth-child(1) .sub-hour { font-family: var(--serif); font-style: italic; font-variant-numeric: lining-nums; font-size: 1.05em; color: var(--magenta); }
+.hours-strip a:nth-of-type(3) b,
+.sub-menu li:nth-child(3) .sub-hour { font-family: var(--sans); font-weight: 300; font-size: 1em; color: var(--wit); }
+.hours-strip a:nth-of-type(1) b { font-size: .95em; }
+.hours-strip a:nth-of-type(3) b { font-size: .85em; }
+
+/* ---------- Gesplitste blokken (verhaal + sample) ---------- */
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
+  align-items: center;
+}
+.split--reverse .visual { order: 2; }
+
+/* ---------- 2. Verhaal ---------- */
+
+.story { padding-top: 110px; }
+.story-text p:not(.kicker):not(.sub) { color: var(--tekst-zacht); }
+
+.quote {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  margin: 110px 0 0;
+  min-height: clamp(360px, 42vw, 620px);
+  display: grid;
+  place-items: center;
+  background: var(--bordeaux);
+  padding: 110px 32px;
+  text-align: center;
+}
+/* de vloedgolf-video vult het hele vlak */
+.quote-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+/* bordeaux sluier: donkerder links en rechts, waar de tekst staat; het flesje in het midden blijft helder */
+.quote::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(to right, rgba(32, 32, 32, .82) 0%, rgba(46, 18, 25, .35) 34%, transparent 42%, transparent 58%, rgba(46, 18, 25, .35) 66%, rgba(32, 32, 32, .82) 100%),
+    linear-gradient(to bottom, rgba(32, 32, 32, .45), rgba(138, 56, 77, .12) 45%, rgba(32, 32, 32, .55));
+}
+/* de quote in twee delen naast het flesje: regel 1 links boven, regel 2 rechts onder */
+.quote p {
+  position: relative;
+  width: 100%;
+  max-width: var(--breed);
+  min-height: clamp(260px, 30vw, 440px);
+  margin: 0 auto;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.5rem, 2.9vw, 2.8rem);
+  line-height: 1.1;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, .8);
+}
+.quote-l1,
+.quote-l2 {
+  position: absolute;
+  white-space: nowrap;
+}
+.quote-l1 { left: 0; top: 8%; text-align: left; }
+.quote-l2 { right: 0; bottom: 8%; text-align: right; }
+
+@media (max-width: 900px) {
+  /* op gsm en tablet: regel 1 bovenaan, regel 2 onderaan, flesje vrij in het midden */
+  .quote { min-height: 520px; padding: 40px 20px; }
+  .quote-video { object-position: 50% 50%; }
+  .quote::before {
+    background: linear-gradient(to bottom, rgba(32, 32, 32, .85) 0%, rgba(46, 18, 25, .3) 26%, transparent 36%, transparent 64%, rgba(46, 18, 25, .3) 74%, rgba(32, 32, 32, .88) 100%);
+  }
+  .quote p { min-height: 440px; font-size: 1.9rem; }
+  .quote-l1, .quote-l2 { width: 100%; text-align: center; white-space: normal; }
+  .quote-l1 { top: 0; }
+  .quote-l2 { bottom: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .quote-video { display: none; }
+  .quote { background: url("media/nocte_quote_vloedgolven_poster.jpg") center / cover, var(--bordeaux); }
+}
+
+/* ---------- 3. Onze parfums: intro + tijdlijn ---------- */
+
+.parfums {
+  background:
+    radial-gradient(60% 60% at 50% 0%, rgba(151, 4, 191, .22), transparent 70%),
+    var(--noir);
+  padding: 110px 0 90px;
+}
+.section-head {
+  text-align: center;
+  max-width: 40em;
+  margin: 0 auto;
+}
+.section-head p { margin-left: auto; margin-right: auto; }
+.section-head p:not(.kicker):not(.sub) { color: var(--tekst-zacht); }
+
+/* Menukaart: drie parfums, geserveerd in drie glazen */
+.carte {
+  max-width: 820px;
+  margin: 72px auto 0;
+  padding: 10px;
+  border: 1px solid rgba(242, 5, 179, .55);
+  background:
+    radial-gradient(80% 60% at 50% 0%, rgba(151, 4, 191, .18), transparent 70%),
+    radial-gradient(60% 50% at 50% 100%, rgba(138, 56, 77, .35), transparent 70%),
+    #1A0C11;
+  box-shadow: 0 40px 120px rgba(0, 0, 0, .55), 0 0 60px rgba(242, 5, 179, .08);
+}
+.carte-inner {
+  position: relative;
+  border: 1px solid rgba(138, 56, 77, .8);
+  padding: 56px 64px 48px;
+}
+/* hoekjes zoals op een gedrukte kaart */
+.carte-inner::before,
+.carte-inner::after {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--magenta);
+}
+.carte-inner::before { top: 8px; left: 8px; border-right: 0; border-bottom: 0; }
+.carte-inner::after { bottom: 8px; right: 8px; border-left: 0; border-top: 0; }
+
+.carte-head, .carte-foot { text-align: center; }
+.carte-head p, .carte-foot p { margin-left: auto; margin-right: auto; }
+.carte-kicker {
+  font-size: .68rem;
+  letter-spacing: .4em;
+  text-transform: uppercase;
+  color: var(--magenta);
+  margin-bottom: .6em;
+}
+.carte-title {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+  line-height: 1.1;
+  margin-bottom: .2em;
+}
+.carte-served {
+  font-family: var(--cta);
+  font-size: .78rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--tekst-zacht);
+}
+.carte-ornament {
+  display: block;
+  text-align: center;
+  margin: 18px auto;
+  color: var(--magenta);
+  font-size: .8rem;
+  letter-spacing: 1em;
+}
+.carte-ornament::before,
+.carte-ornament::after {
+  content: "";
+  display: inline-block;
+  width: 70px;
+  height: 1px;
+  margin: 0 14px;
+  vertical-align: middle;
+  background: linear-gradient(to right, transparent, var(--bordeaux));
+}
+.carte-ornament::after { background: linear-gradient(to left, transparent, var(--bordeaux)); }
+
+.carte-list { list-style: none; margin: 8px 0; padding: 0; }
+.carte-item + .carte-item { border-top: 1px dashed rgba(234, 220, 226, .14); }
+.carte-item a {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+  padding: 28px 8px;
+  text-decoration: none;
+  transition: background .3s;
+}
+.carte-item a:hover { background: rgba(138, 56, 77, .18); }
+
+.glass {
+  flex: 0 0 44px;
+  height: 58px;
+  fill: none;
+  stroke: var(--act);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 6px var(--act));
+  transition: transform .4s;
+}
+.carte-item a:hover .glass { transform: rotate(-8deg) translateY(-2px); }
+
+.carte-body { flex: 1; min-width: 0; }
+.carte-body p { margin: 0; max-width: none; }
+.carte-line {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+.carte-hour {
+  font-family: var(--klok);
+  font-size: .8rem;
+  color: var(--rood);
+  text-shadow: 0 0 8px rgba(217, 4, 4, .7);
+}
+.carte-name {
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+  line-height: 1.2;
+  transition: color .25s;
+}
+.carte-item a:hover .carte-name { color: var(--magenta); }
+/* stippellijn zoals tussen gerecht en prijs */
+.carte-dots {
+  flex: 1;
+  border-bottom: 1px dotted rgba(234, 220, 226, .35);
+  transform: translateY(-5px);
+}
+.carte-act {
+  font-family: var(--cta);
+  font-size: .78rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--magenta);
+}
+.carte-notes {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--tekst-zacht);
+  margin-top: 6px !important;
+}
+.carte-glass {
+  font-size: .66rem;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: rgba(234, 220, 226, .55);
+  margin-top: 8px !important;
+}
+.carte-foot p {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--tekst-zacht);
+  margin-bottom: 24px;
+}
+
+/* menukaart per parfum (in elke akte-sectie, naast de eigen foto) */
+.menu-card {
+  margin: 0;
+  max-width: none;
+  border-color: var(--act);
+  background:
+    radial-gradient(80% 50% at 50% 0%, color-mix(in srgb, var(--act) 22%, transparent), transparent 70%),
+    rgba(20, 10, 13, .82);
+  backdrop-filter: blur(6px);
+}
+.menu-card .carte-inner { text-align: center; padding: 48px 48px 44px; }
+.menu-card .carte-inner p { margin-left: auto; margin-right: auto; }
+.menu-card .glass {
+  display: block;
+  width: 48px;
+  height: 64px;
+  margin: 18px auto 6px;
+}
+.menu-card h3 { margin-bottom: .2em; }
+.menu-card .sub { margin-bottom: .4em; }
+
+/* het uur per akte in een eigen lettertype, groot */
+.mc-hour {
+  font-size: clamp(3.4rem, 6vw, 5rem) !important;
+  line-height: 1;
+  margin: 4px auto 18px !important;
+}
+.acte--1 .mc-hour {             /* 22:00 · chique aankomst: Playfair Display italic */
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--magenta);
+  text-shadow: 0 0 24px rgba(242, 5, 179, .45);
+  letter-spacing: .02em;
+  font-variant-numeric: lining-nums;
+}
+.acte--2 .mc-hour {             /* 00:00 · middernacht: digitale klok */
+  font-family: var(--klok);
+  color: var(--rood);
+  text-shadow: 0 0 22px rgba(217, 4, 4, .8), 0 0 3px rgba(255, 80, 80, .9);
+  font-size: clamp(2.6rem, 5vw, 4rem) !important;
+}
+.acte--3 .mc-hour {             /* 05:00 · het feest loopt ten einde: rustig IBM Plex Serif Light */
+  font-family: var(--sans);
+  font-weight: 300;
+  color: var(--wit);
+  letter-spacing: .08em;
+  text-shadow: 0 0 30px rgba(217, 4, 4, .55);
+}
+/* ook de stempels op de foto's per akte */
+.acte--1 .stamp { font-family: var(--serif); font-style: italic; font-variant-numeric: lining-nums; font-size: 1.5rem; color: var(--magenta); text-shadow: 0 0 10px rgba(242, 5, 179, .6); }
+.acte--3 .stamp { font-family: var(--sans); font-weight: 300; font-size: 1.35rem; color: var(--wit); text-shadow: 0 0 10px rgba(217, 4, 4, .7); }
+
+/* ingrediënten groot, als regels op een kaart */
+.mc-notes {
+  list-style: none;
+  margin: 6px auto 0;
+  padding: 0;
+  max-width: 22em;
+}
+.mc-notes li {
+  font-family: var(--sans);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1.35rem, 2.2vw, 1.65rem);
+  line-height: 1.3;
+  padding: 10px 0;
+  border-bottom: 1px dotted color-mix(in srgb, var(--act) 70%, transparent);
+}
+.mc-notes li:last-child { border-bottom: 0; }
+.mc-label { font-size: .74rem !important; }
+
+.mc-desc { color: var(--tekst-zacht); font-size: .95rem; max-width: 30em; }
+.mc-label {
+  font-size: .66rem;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--magenta);
+  margin: 1.6em auto .3em;
+}
+.menu-card .carte-glass { margin: 10px auto 28px !important; }
+.menu-card .carte-glass::before,
+.menu-card .carte-glass::after { content: " — "; color: var(--act); }
+
+/* "geserveerd in" bij elke akte */
+.served {
+  font-family: var(--cta);
+  font-size: .74rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--tekst-zacht);
+  margin-top: -.6em;
+}
+.served::before { content: "— "; color: var(--magenta); }
+
+/* ---------- 3a–c. Elk uur een eigen sectie ---------- */
+
+.acte {
+  position: relative;
+  overflow: hidden;
+  padding: 120px 0;
+}
+.acte-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: 88px;
+  align-items: center;
+}
+.acte h3 { font-size: clamp(2.6rem, 5vw, 4.2rem); }
+.acte-text p:not(.kicker):not(.sub) { color: var(--tekst-zacht); }
+
+.notes { list-style: none; padding: 0; margin: 28px 0 36px; }
+
+/* Acte I · 22:00 · licht en fris, zoals de bar bij het binnenkomen */
+/* Acte I · 22:00 · donker olijfgroen, fris als munt en citroengras aan de bar */
+.acte--1 {
+  background:
+    radial-gradient(60% 70% at 85% 50%, rgba(79, 89, 2, .55), transparent 70%),
+    radial-gradient(50% 60% at 10% 100%, rgba(242, 5, 179, .12), transparent 70%),
+    #15170A;
+}
+.acte--1 .text-link { border-color: var(--olijf); }
+.acte--1 .text-link:hover { color: var(--magenta); border-color: var(--magenta); }
+/* niet meer gebruikt: het grote uur staat al in de menubalk (stap 42) */
+.ghost-hour {
+  position: absolute;
+  right: -2vw;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--serif);
+  font-size: clamp(14rem, 34vw, 30rem);
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(79, 89, 2, .9);
+  pointer-events: none;
+  user-select: none;
+}
+.notes--chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.notes--chips li {
+  font-size: .7rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  padding: 9px 16px;
+  background: var(--olijf);
+  border: 1px solid rgba(234, 220, 226, .15);
+  color: var(--wit);
+  border-radius: 999px;
+}
+
+/* Acte II · 00:00 · middernacht, donker, de volle maan */
+.acte--2 {
+  background: radial-gradient(70% 55% at 50% 30%, #2a1118 0%, #0f0a0c 70%);
+  text-align: center;
+  padding: 140px 0 130px;
+}
+.moon {
+  position: absolute;
+  left: 50%;
+  top: 110px;
+  width: min(560px, 80vw);
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 38%, rgba(246, 246, 246, .16), rgba(151, 4, 191, .28) 40%, rgba(242, 5, 179, .10) 58%, transparent 72%);
+  filter: blur(6px);
+  animation: moon 9s ease-in-out infinite alternate;
+}
+@keyframes moon {
+  from { opacity: .7; transform: translateX(-50%) scale(.97); }
+  to   { opacity: 1;  transform: translateX(-50%) scale(1.03); }
+}
+.acte-center { position: relative; }
+.acte-center p { margin-left: auto; margin-right: auto; }
+.acte--2 .menu-card { max-width: 640px; margin: 0 auto; text-align: center; }
+/* niet meer gebruikt (stap 42) */
+.big-clock {
+  font-family: var(--klok);
+  font-size: clamp(3rem, 11vw, 8rem);
+  color: var(--stempel);
+  opacity: .9;
+  text-shadow: 0 0 34px rgba(217, 4, 4, .7), 0 0 4px rgba(255, 80, 80, .8);
+  margin: -.2em auto .5em;
+  letter-spacing: .04em;
+}
+.visual--moon {
+  width: min(420px, 100%);
+  aspect-ratio: 4 / 5;
+  margin: 0 auto 56px;
+  box-shadow: 0 40px 120px rgba(151, 4, 191, .35);
+}
+.notes--row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0;
+}
+.notes--row li {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  padding: 0 22px;
+}
+.notes--row li + li { border-left: 1px solid var(--paars); }
+
+/* Acte III · 05:00 · dageraad, warm licht dat binnenvalt */
+.acte--3 {
+  background: linear-gradient(to bottom, var(--wijn) 0%, #3B1822 50%, rgba(217, 4, 4, .55) 150%), var(--wijn);
+}
+.acte-grid--reverse { grid-template-columns: 1.05fr 1fr; }
+.notes--list { counter-reset: none; }
+.notes--list li {
+  display: flex;
+  gap: 18px;
+  align-items: baseline;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--lijn);
+  font-family: var(--serif);
+  font-size: 1.2rem;
+}
+.notes--list span {
+  font-family: var(--sans);
+  font-size: .66rem;
+  letter-spacing: .2em;
+  color: var(--magenta);
+}
+
+.center { text-align: center; margin-top: 56px; }
+
+/* ---------- 4. Op de dansvloer ---------- */
+
+.floor {
+  background:
+    radial-gradient(50% 60% at 100% 60%, rgba(242, 5, 179, .14), transparent 70%),
+    radial-gradient(40% 50% at 0% 100%, rgba(151, 4, 191, .18), transparent 70%),
+    var(--noir);
+  padding-bottom: 110px;
+}
+
+.floor-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin-top: 80px;
+}
+.floor-intro {
+  padding-right: 56px;
+  border-right: 1px solid var(--lijn);
+}
+.floor-intro p:not(.kicker):not(.sub) { color: var(--tekst-zacht); }
+
+.proofs {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 56px;
+  display: grid;
+  align-content: center;
+}
+.proofs li {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--lijn);
+}
+.proofs li:last-child { border-bottom: 0; }
+.proofs li:nth-child(1) .proof-title::before { background: var(--magenta); }
+.proofs li:nth-child(2) .proof-title::before { background: var(--paars); }
+.proofs li:nth-child(3) .proof-title::before { background: var(--rood); }
+.proof-title::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 14px;
+  vertical-align: middle;
+}
+.proof-title {
+  font-family: var(--serif);
+  font-size: 1.8rem;
+  line-height: 1.1;
+}
+.proofs li span:last-child:not(.proof-title) {
+  font-size: .72rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--tekst-zacht);
+}
+
+/* ---------- 5. Gratis sample ---------- */
+
+.sample {
+  background:
+    radial-gradient(60% 70% at 0% 0%, rgba(242, 5, 179, .14), transparent 70%),
+    radial-gradient(50% 60% at 100% 100%, rgba(151, 4, 191, .2), transparent 70%),
+    var(--wijn);
+  padding: 110px 0;
+  scroll-margin-top: 60px;
+}
+.sample-text > p:not(.kicker):not(.sub) { color: var(--tekst-zacht); }
+
+/* plaatshouder voor het MailerLite-formulier */
+.form-plek {
+  margin-top: 32px;
+  padding: 28px;
+  border: 1px dashed rgba(246, 246, 246, .35);
+  border-radius: 6px;
+  background: rgba(32, 32, 32, .35);
+}
+.form-plek-label {
+  font-size: .68rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--magenta);
+  margin-bottom: 18px;
+}
+.mock-field {
+  border-bottom: 1px solid var(--lijn);
+  padding: 12px 0;
+  margin-bottom: 8px;
+  font-size: .9rem;
+  color: rgba(246, 246, 246, .5);
+}
+.mock-field--select::after { content: " ▾"; }
+.mock-check {
+  display: flex;
+  gap: 10px;
+  font-size: .8rem;
+  color: rgba(246, 246, 246, .6);
+  margin: 20px 0;
+}
+.mock-check .box {
+  flex: 0 0 14px;
+  height: 14px;
+  margin-top: 4px;
+  border: 1px solid var(--magenta);
+}
+.mock-thanks {
+  font-size: .78rem;
+  color: rgba(246, 246, 246, .5);
+  margin: 16px 0 0;
+}
+
+/* ---------- 6. Footer ---------- */
+
+.footer {
+  background: linear-gradient(to bottom, var(--noir), #14090C);
+  border-top: 1px solid var(--lijn);
+  padding: 80px 0 48px;
+  text-align: center;
+}
+.footer p { margin-left: auto; margin-right: auto; }
+.logo--big { font-size: clamp(2.6rem, 6vw, 4rem); margin-bottom: .2em; }
+.footer-social {
+  font-size: .78rem;
+  letter-spacing: .14em;
+  color: var(--tekst-zacht);
+}
+.small {
+  font-size: .7rem;
+  color: rgba(246, 246, 246, .45);
+  margin-top: 40px;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+  .hero,
+  .split,
+  .floor-grid { grid-template-columns: 1fr; gap: 40px; }
+
+  .hero { padding-top: 40px; }
+  .split--reverse .visual { order: 0; }
+
+  .acte-grid,
+  .acte-grid--reverse { grid-template-columns: 1fr; gap: 48px; }
+  .acte-grid--reverse .visual { order: -1; }
+  .acte { padding: 80px 0; }
+  .ghost-hour { top: 120px; transform: none; font-size: 14rem; }
+  .carte-inner { padding: 44px 24px 36px; }
+
+  /* header op gsm/tablet: hamburger + menu over het hele scherm */
+  .header { grid-template-columns: 1fr auto; padding: 14px 20px; }
+  .header-right .btn--small { display: none; }
+  .burger { display: block; }
+  .menu {
+    position: fixed;
+    inset: 0;
+    top: 0;
+    height: 100vh;
+    height: 100dvh;
+    z-index: -1;
+    display: flex;
+    align-items: center;
+    padding: 90px 28px 40px;
+    background: radial-gradient(90% 60% at 50% 20%, #3B1822, #120b0d 75%);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .4s, visibility .4s;
+  }
+  .is-open .menu { opacity: 1; visibility: visible; }
+  /* backdrop-filter zou het vaste menu in de header opsluiten */
+  .header.is-open {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: transparent;
+    border-color: transparent;
+  }
+  .menu-list { flex-direction: column; gap: 6px; width: 100%; }
+  .menu-list > li > a {
+    font-family: var(--serif);
+    font-size: 2.2rem;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--wit);
+  }
+  .menu-list > li > a::after { display: none; }
+  .has-sub > a::before { display: none; }
+  .sub-menu {
+    position: static;
+    min-width: 0;
+    opacity: 1;
+    visibility: inherit; /* volgt het menu: dicht = onzichtbaar én niet aanklikbaar */
+    transform: none;
+    background: none;
+    border: 0;
+    border-left: 1px solid var(--lijn);
+    padding: 0;
+    margin: 4px 0 18px 4px;
+    backdrop-filter: none;
+  }
+  .sub-menu::before { display: none; }
+  .sub-menu a { padding: 10px 18px; }
+  .menu-cta-mobile { display: block; margin-top: 24px; }
+  .menu-cta-mobile a {
+    font-family: var(--cta) !important;
+    font-size: .85rem !important;
+    letter-spacing: .14em !important;
+    text-transform: uppercase !important;
+    color: var(--wit) !important;
+    background: linear-gradient(120deg, var(--bordeaux), var(--paars));
+    border: 1px solid var(--magenta);
+    padding: 1em 2em !important;
+  }
+
+  .floor-intro { padding-right: 0; border-right: 0; border-bottom: 1px solid var(--lijn); padding-bottom: 32px; }
+  .proofs { padding-left: 0; }
+
+  .hours-strip {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-left: 32px;
+    margin-right: 32px;
+    width: auto;
+  }
+  .strip-label { width: 100%; border-right: 0; padding-right: 0; }
+
+  .visual--wide { aspect-ratio: 4 / 3; }
+
+  .visual--hero.visual--photo { height: auto; width: min(440px, 100%); }
+
+  /* staande tablet: productfoto's niet schermvullend, zodat foto + menukaart samen leesbaar blijven */
+  .visual--photo { width: min(440px, 100%); margin-left: auto; margin-right: auto; }
+  .visual--moon.visual--photo { width: min(380px, 100%); }
+}
+
+@media (max-width: 560px) {
+  .wrap { padding: 0 20px; }
+  .logo { font-size: 1.3rem; }
+  .hours-strip { margin-left: 20px; margin-right: 20px; flex-direction: column; align-items: flex-start; gap: 12px; }
+  .hero { padding-top: 48px; padding-bottom: 48px; }
+  .hours-strip { padding: 24px 0; }
+  .story, .parfums, .sample { padding-top: 72px; }
+  .parfums, .sample { padding-bottom: 72px; }
+  .quote { margin-top: 72px; padding: 72px 20px; }
+  .actions { gap: 20px; }
+  .menu-card .carte-inner { padding: 40px 18px 32px; }
+  .carte { padding: 6px; }
+  .carte-inner { padding: 40px 14px 32px; }
+  .carte-item a { gap: 16px; padding: 22px 4px; align-items: flex-start; }
+  .glass { flex-basis: 32px; height: 44px; }
+  .carte-line { flex-wrap: wrap; gap: 4px 10px; }
+  .carte-hour { width: 100%; }
+  .carte-dots { display: none; }
+  .carte-act { margin-left: auto; font-size: .66rem; }
+  .carte-ornament::before, .carte-ornament::after { width: 40px; }
+}
+
+/* ---------- Scrollanimaties (script.js zet data-reveal enkel op blokken onder het scherm) ---------- */
+[data-reveal] {
+  opacity: 0;
+  transition:
+    opacity .9s ease,
+    transform 1.1s cubic-bezier(.16, 1, .3, 1),
+    filter 1.1s ease;
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: transform, opacity;
+}
+[data-reveal="up"]    { transform: translateY(70px); }
+[data-reveal="left"]  { transform: translateX(-90px); }
+[data-reveal="right"] { transform: translateX(90px); }
+[data-reveal="zoom"]  { transform: scale(1.08); filter: blur(6px); }
+[data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+/* de quote-regels staan absoluut gepositioneerd: hun schuif mag het vlak niet breder maken */
+.quote { overflow: hidden; }
+.hero-text, .visual--hero { will-change: transform, opacity; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity: 1 !important; transform: none !important; filter: none !important; }
+}
+main, .footer { overflow-x: clip; }
+
+/* ---------- Animatie over de foto bij het formulier (ingang NOCTE) ----------
+   Alles ligt als laag óver de foto: de foto zelf (ruis, wazigheid, vintage filmrand) blijft onaangeroerd.
+   - neon-glow / neon-dim: het neonbord gloeit en flikkert af en toe
+   - neon-floor: de roze weerspiegeling op de natte straat flikkert mee
+   - mist: twee lagen lichte mist die traag over de straat drijven */
+
+.ingang-fx {
+  position: absolute;
+  /* binnen de filmrand blijven */
+  left: 4%; right: 4.3%; top: 2%; bottom: 3%;
+  overflow: hidden;
+  pointer-events: none;
+}
+.ingang-fx span { position: absolute; display: block; }
+
+/* gloed rond de letters (Screen maakt alleen lichter, dus de foto blijft zichtbaar) */
+.neon-glow {
+  left: 18%; right: 18%; top: 11%; height: 19%;
+  background: radial-gradient(ellipse 50% 42% at 50% 50%, rgba(255, 70, 200, .55), rgba(242, 5, 179, .28) 45%, transparent 72%);
+  mix-blend-mode: screen;
+  filter: blur(6px);
+  animation: neon-flicker 7s infinite, neon-hum 2.4s ease-in-out infinite alternate;
+}
+/* even "uit": de letters worden kort donkerder */
+.neon-dim {
+  left: 28%; right: 28%; top: 16.5%; height: 9%;
+  background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(40, 10, 28, .8), rgba(40, 10, 28, .45) 55%, transparent 80%);
+  filter: blur(6px);
+  mix-blend-mode: multiply;
+  opacity: 0;
+  animation: neon-off 7s infinite;
+}
+/* roze weerspiegeling op de straat en de loper */
+.neon-floor {
+  left: 5%; right: 5%; bottom: 0; height: 30%;
+  background: radial-gradient(ellipse 60% 55% at 50% 60%, rgba(242, 5, 179, .32), transparent 70%);
+  mix-blend-mode: screen;
+  filter: blur(10px);
+  animation: neon-flicker 7s infinite;
+}
+
+@keyframes neon-flicker {
+  0%, 17%, 19.5%, 22%, 54%, 56.5%, 100% { opacity: 1; }
+  18%, 21% { opacity: .15; }
+  20% { opacity: .7; }
+  55% { opacity: .25; }
+}
+@keyframes neon-off {
+  0%, 17%, 19.5%, 22%, 54%, 56.5%, 100% { opacity: 0; }
+  18%, 21% { opacity: .55; }
+  20% { opacity: .15; }
+  55% { opacity: .45; }
+}
+@keyframes neon-hum {
+  from { transform: scale(1); }
+  to   { transform: scale(1.04); }
+}
+
+/* lichte mist: naadloos herhalende ruiswolk (SVG), twee lagen in tegengestelde richting */
+.mist {
+  left: 0; bottom: 0; height: 42%; width: 200%;
+  background-repeat: repeat-x;
+  background-size: 50% 100%;
+  mix-blend-mode: screen;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 40%, #000 85%, transparent);
+          mask-image: linear-gradient(to bottom, transparent, #000 40%, #000 85%, transparent);
+}
+.mist--1 {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='300'><filter id='f' x='0' y='0' width='100%25' height='100%25'><feTurbulence type='fractalNoise' baseFrequency='.006 .018' numOctaves='3' seed='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .93 0 0 0 0 .82 0 0 0 0 .88 1.6 0 0 0 -.62'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>");
+  opacity: .45;
+  filter: blur(4px);
+  animation: mist-drift 46s linear infinite;
+}
+.mist--2 {
+  bottom: 6%;
+  height: 34%;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='300'><filter id='f' x='0' y='0' width='100%25' height='100%25'><feTurbulence type='fractalNoise' baseFrequency='.01 .03' numOctaves='2' seed='11' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .95 0 0 0 0 .78 0 0 0 0 .9 1.5 0 0 0 -.6'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>");
+  opacity: .32;
+  filter: blur(6px);
+  animation: mist-drift 30s linear infinite reverse;
+}
+@keyframes mist-drift {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* bij "beweging beperken": geen flikkeren, wel een stilstaande zachte gloed en mist */
+@media (prefers-reduced-motion: reduce) {
+  .neon-glow, .neon-floor, .neon-dim, .mist { animation: none; }
+}
+
+/* ---------- Animatie over de foto van Acte III (wijnglas) ----------
+   Eén SVG-laag over de foto (zie index.html): de rook stijgt en kronkelt (loop van 24 s, twee lagen
+   die in elkaar overvloeien, dus zonder sprong) en het gordijn waait zacht heen en weer (loop van 20 s,
+   eindigt exact waar het begint). De foto zelf blijft onaangeroerd. */
+
+.fx-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-svg { display: none; }
+}
+
+/* ---------- Acte II: foto en menukaart naast elkaar ----------
+   Klok en kicker blijven gecentreerd erboven; enkel op gsm (tot 600 px) staan foto en kaart onder elkaar. */
+.acte-pair {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1fr);
+  gap: 72px;
+  align-items: center;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+.acte-pair .visual--moon.visual--photo { width: 100%; max-width: 460px; margin: 0 auto; }
+.acte--2 .acte-pair .menu-card { max-width: none; margin: 0; }
+
+@media (max-width: 900px) {
+  .acte-pair { gap: 32px; grid-template-columns: minmax(0, .8fr) minmax(0, 1fr); }
+}
+@media (max-width: 600px) {
+  .acte-pair { grid-template-columns: 1fr; gap: 48px; }
+  .acte-pair .visual--moon.visual--photo { max-width: 380px; }
+}
+
+/* ---------- Instagram-slider boven Corps à Corps ----------
+   Een rij foto's (flexbox) die je opzij scrolt of swipet, met pijltjes op desktop.
+   Hover: de foto komt naar voren. Klik: de foto opent in het groot (lightbox). */
+.slider { padding-top: 72px; }
+.slider-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.slider-head .kicker { margin: 0; }
+.slider-nav { display: flex; gap: 10px; }
+.slider-btn {
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  border: 1px solid var(--magenta);
+  background: transparent;
+  color: var(--wit);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background .25s, box-shadow .25s, opacity .25s;
+}
+.slider-btn:hover:not(:disabled) { background: rgba(242, 5, 179, .18); box-shadow: 0 0 18px rgba(242, 5, 179, .45); }
+.slider-btn:disabled { opacity: .3; cursor: default; }
+.slider-btn:focus-visible, .slide:focus-visible, .lb-btn:focus-visible { outline: 2px solid var(--magenta); outline-offset: 3px; }
+
+.slider-track {
+  list-style: none;
+  margin: 0;
+  display: flex;
+  gap: 22px;
+  overflow-x: auto;
+  overflow-y: hidden; /* enkel horizontaal schuiven: geen verticale schuifbalk, de rij blijft op gelijk niveau */
+  overscroll-behavior-y: none;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  /* ruimte boven en onder, zodat een foto die naar voren komt niet wordt afgesneden */
+  padding: 34px max(32px, calc((100vw - var(--breed)) / 2 + 32px)) 44px;
+  scroll-padding-inline: max(32px, calc((100vw - var(--breed)) / 2 + 32px));
+  scrollbar-width: none; /* de gewone schuifbalk is vervangen door de ledbalk eronder */
+}
+.slider-track::-webkit-scrollbar { display: none; }
+.slider-track li {
+  flex: 0 0 clamp(230px, 24vw, 330px);
+  scroll-snap-align: start;
+}
+.slide {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 1px solid rgba(234, 220, 226, .12);
+  border-radius: 6px;
+  overflow: hidden;
+  background: #171012;
+  cursor: zoom-in;
+  transform-origin: center center;
+  transition: transform .45s cubic-bezier(.16, 1, .3, 1), box-shadow .45s ease, border-color .45s ease;
+}
+.slide img { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; }
+/* hover: de foto groeit vanuit het midden gelijk naar alle vier de kanten */
+.slider-track li { position: relative; }
+.slider-track li:hover, .slider-track li:focus-within { z-index: 2; }
+.slide:hover, .slide:focus-visible {
+  transform: scale(1.08);
+  border-color: rgba(242, 5, 179, .6);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, .55), 0 0 30px rgba(242, 5, 179, .3);
+}
+
+/* lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 72px;
+  background: rgba(20, 8, 12, .92);
+  -webkit-backdrop-filter: blur(6px);
+          backdrop-filter: blur(6px);
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+.lightbox[hidden] { display: none; }
+.lightbox.is-open { opacity: 1; }
+.lb-figure { margin: 0; text-align: center; transform: scale(.94); transition: transform .4s cubic-bezier(.16, 1, .3, 1); }
+.lightbox.is-open .lb-figure { transform: none; }
+.lb-img {
+  display: block;
+  max-width: min(86vw, 900px);
+  max-height: 82vh;
+  width: auto; height: auto;
+  border-radius: 4px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, .7), 0 0 40px rgba(151, 4, 191, .25);
+}
+.lb-cap { margin-top: 14px; font-family: var(--serif); font-style: italic; color: var(--wit); }
+.lb-btn {
+  position: absolute;
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  border: 1px solid rgba(234, 220, 226, .3);
+  background: rgba(32, 32, 32, .6);
+  color: var(--wit);
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color .25s, box-shadow .25s;
+}
+.lb-btn:hover { border-color: var(--magenta); box-shadow: 0 0 18px rgba(242, 5, 179, .45); }
+.lb-close { top: 18px; right: 18px; }
+.lb-prev { left: 14px; top: 50%; transform: translateY(-50%); }
+.lb-next { right: 14px; top: 50%; transform: translateY(-50%); }
+body.lb-lock { overflow: hidden; }
+
+@media (max-width: 560px) {
+  .slider { padding-top: 48px; }
+  .slider-track { gap: 14px; padding-left: 20px; padding-right: 20px; scroll-padding-inline: 20px; }
+  .slider-track li { flex-basis: 72vw; }
+  .lightbox { padding: 64px 12px; }
+  .lb-img { max-width: 94vw; }
+  .lb-prev, .lb-next { top: auto; bottom: 18px; transform: none; }
+  .lb-prev { left: calc(50% - 64px); }
+  .lb-next { right: calc(50% - 64px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .slider-track { scroll-behavior: auto; }
+  .slide, .lightbox, .lb-figure { transition: none; }
+  .slide:hover, .slide:focus-visible { transform: none; }
+}
+
+/* ============================================================
+   ANKER NAAR HET FORMULIER
+   "Claim your sample" scrollt naar het formulier zelf (#formulier),
+   net onder de vaste menubalk, en het formulier licht kort op.
+   ============================================================ */
+.form-anker { scroll-margin-top: 96px; border-radius: 2px; }
+.form-anker:target { animation: form-aankomst 2.4s ease-out .5s 1 both; }
+@keyframes form-aankomst {
+  0%   { box-shadow: 0 0 0 0 rgba(242,5,179,0); }
+  25%  { box-shadow: 0 0 0 2px rgba(242,5,179,.7), 0 0 40px rgba(242,5,179,.45); }
+  100% { box-shadow: 0 0 0 0 rgba(242,5,179,0), 0 0 0 rgba(242,5,179,0); }
+}
+@media (max-width: 600px) { .form-anker { scroll-margin-top: 80px; } }
+@media (prefers-reduced-motion: reduce) { .form-anker:target { animation: none; } }
+
+/* ============================================================
+   QUELLE HEURE? · BEWEGENDE MIST ALS ACHTERGROND
+   Vier mistlagen in het palet (magenta, paars, bordeaux, zacht wit).
+   Elke laag is een naadloos herhalende ruiswolk die precies één tegel
+   verschuift, zodat de lus geen naad heeft:
+   - rechts:        van links naar rechts
+   - onder:         van boven naar onder
+   - schuin-onder:  zijwaarts naar onder
+   - schuin-boven:  zijwaarts naar boven
+   De tussenstappen liggen ongelijk verdeeld, dus de snelheid wisselt:
+   de mist versnelt, vertraagt en drijft dan weer verder.
+   Een donkere gloed achter de tekst houdt alles leesbaar.
+   ============================================================ */
+.parfums { position: relative; overflow: hidden; isolation: isolate; }
+.parfums > .wrap { position: relative; z-index: 2; }
+.parfums-mist {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+          mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+}
+/* de rook loopt tot aan de randen: geen vage overgang boven en onder */
+.parfums-mist.has-rook { -webkit-mask-image: none; mask-image: none; }
+/* donkere schaduw achter de tekst + donkere randen */
+.parfums-mist::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 38% 46% at 50% 50%, rgba(20, 9, 13, .78), rgba(20, 9, 13, .35) 60%, transparent 85%),
+    linear-gradient(to right, rgba(32, 32, 32, .55), transparent 22%, transparent 78%, rgba(32, 32, 32, .55));
+}
+.pm {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background-repeat: repeat;
+  mix-blend-mode: screen;
+  filter: blur(18px); /* maakt de ruis tot zachte, wollige mist */
+  will-change: transform;
+  animation-iteration-count: infinite;
+  animation-timing-function: cubic-bezier(.42, 0, .58, 1);
+}
+.pm--rechts {
+  left:-640px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='640' height='420'><filter id='f' x='0' y='0' width='100%25' height='100%25'><feTurbulence type='fractalNoise' baseFrequency='.0045 .007' numOctaves='3' seed='7' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .95 0 0 0 0 .02 0 0 0 0 .70 1.7 0 0 0 -.72'/></filter><rect width='100%25' height='100%25' filter='url(%23f)'/></svg>");
+  background-size: 640px 420px;
+  opacity: .5;
+  animation-name: pm-rechts;
+  animation-duration: 58s;
+}
+@keyframes pm-rechts {
+  0% {transform:translate3d(0,0,0)}
+  22% {transform:translate3d(64px,0,0)}
+  48% {transform:translate3d(352px,0,0)}
+  70% {transform:translate3d(435px,0,0)}
+  100% {transform:translate3d(640px,0,0)}
+}
+.pm--onder {
+  top:-480px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='720' height='480'><filter id='f' x='0' y='0' width='100%25' height='100%25'><feTurbulence type='fractalNoise' baseFrequency='.004 .006' numOctaves='3' seed='21' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .59 0 0 0 0 .02 0 0 0 0 .75 1.8 0 0 0 -.74'/></filter><rect width='100%25' height='100%25' filter='url(%23f)'/></svg>");
+  background-size: 720px 480px;
+  opacity: .42;
+  animation-name: pm-onder;
+  animation-duration: 47s;
+}
+@keyframes pm-onder {
+  0% {transform:translate3d(0,0,0)}
+  30% {transform:translate3d(0,201px,0)}
+  45% {transform:translate3d(0,240px,0)}
+  80% {transform:translate3d(0,374px,0)}
+  100% {transform:translate3d(0,480px,0)}
+}
+.pm--schuin-onder {
+  right:-680px;top:-460px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='680' height='460'><filter id='f' x='0' y='0' width='100%25' height='100%25'><feTurbulence type='fractalNoise' baseFrequency='.005 .008' numOctaves='2' seed='33' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .62 0 0 0 0 .24 0 0 0 0 .34 1.7 0 0 0 -.70'/></filter><rect width='100%25' height='100%25' filter='url(%23f)'/></svg>");
+  background-size: 680px 460px;
+  opacity: .5;
+  animation-name: pm-schuin-onder;
+  animation-duration: 71s;
+}
+@keyframes pm-schuin-onder {
+  0% {transform:translate3d(0,0,0)}
+  18% {transform:translate3d(-204px,138px,0)}
+  52% {transform:translate3d(-285px,193px,0)}
+  76% {transform:translate3d(-584px,395px,0)}
+  100% {transform:translate3d(-680px,460px,0)}
+}
+.pm--schuin-boven {
+  left:-600px;bottom:-400px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='400'><filter id='f' x='0' y='0' width='100%25' height='100%25'><feTurbulence type='fractalNoise' baseFrequency='.006 .009' numOctaves='2' seed='48' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .92 0 0 0 0 .86 0 0 0 0 .89 1.5 0 0 0 -.68'/></filter><rect width='100%25' height='100%25' filter='url(%23f)'/></svg>");
+  background-size: 600px 400px;
+  opacity: .22;
+  animation-name: pm-schuin-boven;
+  animation-duration: 39s;
+}
+@keyframes pm-schuin-boven {
+  0% {transform:translate3d(0,0,0)}
+  35% {transform:translate3d(120px,-80px,0)}
+  50% {transform:translate3d(312px,-208px,0)}
+  85% {transform:translate3d(420px,-280px,0)}
+  100% {transform:translate3d(600px,-400px,0)}
+}
+.parfums .section-head h2,
+.parfums .section-head .sub,
+.parfums .section-head p { text-shadow: 0 2px 18px rgba(18, 8, 12, .85), 0 0 2px rgba(18, 8, 12, .6); }
+@media (prefers-reduced-motion: reduce) { .pm { animation: none; } }
+
+/* rookmist (WebGL): als die draait, verdwijnen de eenvoudige CSS-lagen */
+.pm-rook { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity 1.6s ease; }
+.parfums-mist.has-rook .pm-rook { opacity: 1; }
+.parfums-mist.has-rook .pm { display: none; }
+
+.parfums-mist.has-rook::after { display: none; } /* de rook maakt zelf het midden en de randen donkerder */
+
+/* ============================================================
+   INSTAGRAM-SLIDER · SCHUIFBALK ALS LEDLAMP
+   Een dun lichtspoor met een ledje dat de positie toont.
+   - rust: zacht gloeiend magenta ledje
+   - hover: het ledje flikkert, zoals een neonbuis die aanslaat
+   - vastnemen (slepen): het ledje gloeit fel en wordt iets dikker
+   ============================================================ */
+.slider-led-wrap { margin-top: -18px; }
+.slider-led {
+  position: relative;
+  height: 22px;            /* ruime grijpzone, het spoor zelf is dun */
+  cursor: pointer;
+  touch-action: none;
+}
+.slider-led::before {      /* het spoor: een gedoofde ledstrip */
+  content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 2px; transform: translateY(-50%);
+  border-radius: 2px;
+  background: linear-gradient(90deg, rgba(138, 56, 77, .25), rgba(138, 56, 77, .45), rgba(138, 56, 77, .25));
+  box-shadow: 0 0 6px rgba(242, 5, 179, .12);
+}
+.led-thumb {
+  position: absolute; top: 50%; left: 0; height: 5px; width: 20%;
+  transform: translateY(-50%);
+  border-radius: 5px;
+  /* hete witte kern, magenta glas eromheen */
+  background: linear-gradient(180deg, #FF7FD6 0%, #FFE3F4 45%, #FFE3F4 55%, #F205B3 100%);
+  box-shadow: 0 0 6px rgba(242, 5, 179, .75), 0 0 16px rgba(242, 5, 179, .4);
+  cursor: grab;
+  transition: height .2s, box-shadow .2s;
+  will-change: left;
+}
+.slider-led:hover .led-thumb { animation: led-flikker 1.6s steps(1, end) infinite; }
+.slider-led.is-grabbed .led-thumb {
+  height: 7px;
+  cursor: grabbing;
+  animation: none;
+  background: linear-gradient(180deg, #FFB3E6 0%, #FFFFFF 45%, #FFFFFF 55%, #FF2EC4 100%);
+  box-shadow: 0 0 8px rgba(255, 79, 203, 1), 0 0 22px rgba(242, 5, 179, .9), 0 0 48px rgba(242, 5, 179, .55), 0 0 80px rgba(151, 4, 191, .4);
+}
+.slider-led.is-grabbed::before { background: linear-gradient(90deg, rgba(242, 5, 179, .2), rgba(242, 5, 179, .45), rgba(242, 5, 179, .2)); }
+@keyframes led-flikker {
+  0%   { opacity: 1;   box-shadow: 0 0 8px rgba(242,5,179,.9), 0 0 22px rgba(242,5,179,.55); }
+  7%   { opacity: .35; box-shadow: 0 0 2px rgba(242,5,179,.3); }
+  10%  { opacity: 1;   box-shadow: 0 0 9px rgba(242,5,179,.95), 0 0 24px rgba(242,5,179,.6); }
+  13%  { opacity: .5;  box-shadow: 0 0 3px rgba(242,5,179,.35); }
+  16%  { opacity: 1;   box-shadow: 0 0 8px rgba(242,5,179,.9), 0 0 22px rgba(242,5,179,.55); }
+  52%  { opacity: .7;  box-shadow: 0 0 5px rgba(242,5,179,.6), 0 0 12px rgba(242,5,179,.3); }
+  55%  { opacity: 1;   box-shadow: 0 0 10px rgba(242,5,179,1), 0 0 26px rgba(242,5,179,.65); }
+  78%  { opacity: .3;  box-shadow: 0 0 2px rgba(242,5,179,.25); }
+  80%  { opacity: 1;   box-shadow: 0 0 8px rgba(242,5,179,.9), 0 0 22px rgba(242,5,179,.55); }
+  100% { opacity: 1;   box-shadow: 0 0 8px rgba(242,5,179,.9), 0 0 22px rgba(242,5,179,.55); }
+}
+@media (max-width: 600px) { .slider-led-wrap { padding-left: 20px; padding-right: 20px; } }
+@media (prefers-reduced-motion: reduce) { .slider-led:hover .led-thumb { animation: none; box-shadow: 0 0 10px rgba(242,5,179,.9), 0 0 26px rgba(242,5,179,.6); } }
+
+/* klokicoon in de header (inleiding tot en met "Quelle Heure?"): zelfde rood, gloed en flikkering als de cijfers */
+.header-clock.is-icoon { display: inline-flex; align-items: center; line-height: 1; text-shadow: none; }
+.klok-icoon {
+  width: 1.35rem; height: 1.35rem; display: block;
+  color: var(--stempel);
+  filter: drop-shadow(0 0 2px rgba(255, 80, 80, .9)) drop-shadow(0 0 7px rgba(217, 4, 4, .8));
+}
+.header-clock.is-icoon { animation: klok-flikker 3.2s steps(1) infinite; }
+.header-clock.is-icoon.tick { animation: tick .6s ease, klok-flikker 3.2s steps(1) .6s infinite; }
+@keyframes klok-flikker {
+  0%, 88% { opacity: 1; }
+  90% { opacity: .35; }
+  92% { opacity: 1; }
+  94% { opacity: .55; }
+  96%, 100% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) { .header-clock.is-icoon, .header-clock.is-icoon.tick { animation: none; } }
+
+
+/* ---------- MailerLite-formulier "NOCTE Après Minuit" (data-form OY27YH) ----------
+   MailerLite brengt eigen opmaak mee. Hieronder krijgt het formulier de look van de onepage:
+   lijntjes als invulvelden, magenta vinkje, verloopknop met gloed.
+   !important is nodig omdat de stijl van MailerLite heel specifiek is. */
+
+.nocte-ml { margin-top: 32px; }
+.nocte-ml .ml-form-embedContainer,
+.nocte-ml .ml-form-embedWrapper,
+.nocte-ml .ml-form-embedBody,
+.nocte-ml .ml-form-successBody {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
+}
+.nocte-ml .ml-form-align-center { text-align: left !important; }
+/* titel en intro staan al in de sectie Ce Soir, dus niet dubbel tonen */
+.nocte-ml .ml-form-embedBody .ml-form-embedContent { display: none !important; }
+
+/* invulvelden: enkel een lijn eronder */
+.nocte-ml input.form-control,
+.nocte-ml .ml-field-group input {
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(234, 220, 226, .35) !important;
+  border-radius: 0 !important;
+  color: var(--wit) !important;
+  font-family: var(--sans) !important;
+  font-size: 1rem !important;
+  padding: 14px 0 !important;
+  height: auto !important;
+  box-shadow: none !important;
+  transition: border-color .3s;
+}
+.nocte-ml input.form-control::placeholder { color: rgba(234, 220, 226, .55) !important; }
+.nocte-ml input.form-control:focus {
+  outline: none !important;
+  border-bottom-color: var(--magenta) !important;
+}
+
+/* toestemmingsvinkje */
+.nocte-ml .ml-form-checkboxRow label,
+.nocte-ml .ml-form-checkboxRow p,
+.nocte-ml .label-description,
+.nocte-ml .label-description p {
+  color: rgba(234, 220, 226, .75) !important;
+  font-family: "IBM Plex Serif", Georgia, serif !important;
+  font-size: .85rem !important;
+  line-height: 1.5 !important;
+}
+.nocte-ml .ml-form-checkboxRow input[type="checkbox"] { accent-color: var(--magenta); }
+.nocte-ml .custom-control-label::before,
+.nocte-ml .ml-form-checkboxRow .label-description::before {
+  background: transparent !important;
+  border: 1px solid var(--magenta) !important;
+  border-radius: 0 !important;
+}
+.nocte-ml .custom-control-input:checked ~ .custom-control-label::before,
+.nocte-ml .ml-form-checkboxRow input[type="checkbox"]:checked + .label-description::before {
+  background: var(--magenta) !important;
+  border-color: var(--magenta) !important;
+}
+
+/* knop CLAIM YOUR SAMPLE: zoals .btn--fel */
+.nocte-ml .ml-form-embedSubmit button.primary,
+.nocte-ml .ml-form-embedSubmit button.loading {
+  font-family: "IBM Plex Serif", Georgia, serif !important;
+  font-weight: 500 !important;
+  font-size: .85rem !important;
+  letter-spacing: .14em !important;
+  text-transform: uppercase !important;
+  color: #F7EEF2 !important;
+  background: linear-gradient(120deg, var(--magenta) 0%, #C204BA 45%, var(--paars) 100%) !important;
+  background-size: 200% 100% !important;
+  border: 1px solid #FF4FCB !important;
+  border-radius: 0 !important;
+  padding: 1.1em 2.2em !important;
+  height: auto !important;
+  width: 100% !important;
+  box-shadow: 0 0 22px rgba(242, 5, 179, .55);
+  animation: cta-gloed 2.8s ease-in-out infinite;
+  transition: background-position .5s, box-shadow .25s;
+}
+.nocte-ml .ml-form-embedSubmit button.primary:hover {
+  background-position: 100% 0 !important;
+  box-shadow: 0 0 40px rgba(242, 5, 179, .8), 0 0 80px rgba(151, 4, 191, .45) !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .nocte-ml .ml-form-embedSubmit button.primary { animation: none; }
+}
+
+/* bedanktekst na inschrijven */
+.nocte-ml .ml-form-successContent h4 {
+  font-family: "Playfair Display", Georgia, serif !important;
+  color: var(--wit) !important;
+  font-weight: 400 !important;
+  font-size: 2rem !important;
+}
+.nocte-ml .ml-form-successContent p {
+  font-family: "IBM Plex Serif", Georgia, serif !important;
+  color: rgba(234, 220, 226, .8) !important;
+}
+.nocte-ml input.form-control { width: 100% !important; margin-bottom: 10px !important; }
+.nocte-ml .ml-form-checkboxRow { margin: 22px 0 26px !important; }
+.nocte-ml .ml-form-checkboxRow label.checkbox { display: flex !important; gap: 12px; align-items: flex-start; }
+.nocte-ml .ml-form-checkboxRow input[type="checkbox"] { width: 16px; height: 16px; margin-top: 3px; flex: 0 0 16px; }
