@@ -207,14 +207,16 @@ if (track) {
   }));
 
   // ledbalk onder de slider: toont waar je bent in de 16 posts, en je kunt hem vastnemen en slepen.
-  // Tijdens het slepen staat de lus even stil, zodat het ledje aan je muis of vinger blijft hangen.
+  // - het ledje blijft onder je muis of vinger zolang je het vasthoudt
+  // - het slepen werkt relatief: links/rechts bewegen = terug/verder in de rij
+  // - aan het einde van de balk (of erachter) blijft de rij eindeloos doorschuiven, rustig genoeg om elke post te bekijken
   const led = document.querySelector('.slider-led');
   const thumb = led && led.querySelector('.led-thumb');
   if (led && thumb) {
     let w = 0.2;          // breedte van het ledje als deel van de balk
     let dragging = false;
     const stap = () => originals[0].getBoundingClientRect().width + parseFloat(getComputedStyle(track).columnGap || 0);
-    const bereik = () => Math.max(1, setWidth - stap()); // van post 1 tot post 16 vooraan
+    const bereik = () => Math.max(1, setWidth - stap()); // een hele balk slepen = van post 1 tot post 16
     const fractie = () => {
       const binnen = ((track.scrollLeft - setWidth) % setWidth + setWidth) % setWidth; // positie in de originele reeks
       return Math.min(1, binnen / bereik());
@@ -229,19 +231,46 @@ if (track) {
     window.addEventListener('resize', paint);
     paint();
 
-    let grab = 0; // waar je het ledje vastnam (afstand vanaf de linkerkant van het ledje)
-    const naarMuis = (clientX) => {
+    let grab = 0;      // waar je het ledje vastnam (afstand vanaf de linkerkant van het ledje)
+    let basis = 0;     // scrollpositie die hoort bij het ledje helemaal links
+    let f = 0;         // waar het ledje nu staat (0 = links, 1 = rechts)
+    let voorbij = 0;   // hoeveel pixels je voorbij het begin (-) of einde (+) van de balk trekt
+    let laatste = 0, raf = 0;
+    const lees = (clientX) => {
       const r = led.getBoundingClientRect();
       const vrij = r.width * (1 - w);
-      const f = Math.min(1, Math.max(0, (clientX - r.left - grab) / vrij));
-      zet(f);                                   // het ledje volgt de muis exact
-      track.scrollLeft = setWidth + f * bereik(); // de rij volgt het ledje
+      const ruw = clientX - r.left - grab;
+      f = Math.min(1, Math.max(0, ruw / vrij));
+      // ook net tegen de rand (laatste 4 px) telt als "doorschuiven"
+      voorbij = ruw > vrij - 4 ? ruw - (vrij - 4) : ruw < 4 ? ruw - 4 : 0;
+    };
+    const toepassen = () => {
+      // de lus: hou de basis in het midden van de drie reeksen, zodat de rij nooit op is
+      if (basis > setWidth * 1.25) basis -= setWidth;
+      else if (basis < setWidth * 0.25) basis += setWidth;
+      zet(f);
+      track.scrollLeft = basis + f * bereik();
+    };
+    const lus = (nu) => {
+      if (!dragging) return;
+      const dt = laatste ? Math.min(nu - laatste, 50) / 1000 : 0;
+      laatste = nu;
+      if (voorbij !== 0) {
+        // doorschuiven aan de rand, gemeten in posts per seconde zodat je elke post kunt bekijken:
+        // tegen de rand 1 post per 2,5 seconden, verder trekken gaat iets sneller, tot hoogstens 1 post per 1,25 seconden
+        const postsPerSec = Math.min(0.8, 0.4 + Math.abs(voorbij) / 300);
+        const snelheid = postsPerSec * stap();
+        basis += Math.sign(voorbij) * snelheid * dt;
+        toepassen();
+      }
+      raf = requestAnimationFrame(lus);
     };
     led.addEventListener('pointerdown', (e) => {
       e.preventDefault();
       led.setPointerCapture(e.pointerId);
       dragging = true;
       led.classList.add('is-grabbed');
+      thumb.classList.remove('is-landing');
       track.style.scrollSnapType = 'none';
       track.style.scrollBehavior = 'auto';
       target = null;
@@ -250,18 +279,31 @@ if (track) {
       const t = thumb.getBoundingClientRect();
       // op het ledje: hou het vast waar je het pakte; ernaast: het midden van het ledje springt naar je muis
       grab = (e.clientX >= t.left && e.clientX <= t.right) ? e.clientX - t.left : t.width / 2;
-      naarMuis(e.clientX);
+      basis = track.scrollLeft - fractie() * bereik();
+      lees(e.clientX);
+      toepassen();
+      laatste = 0;
+      raf = requestAnimationFrame(lus);
     });
-    led.addEventListener('pointermove', (e) => { if (dragging) naarMuis(e.clientX); });
+    led.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      lees(e.clientX);
+      toepassen();
+    });
     const release = () => {
       if (!dragging) return;
       dragging = false;
+      cancelAnimationFrame(raf);
+      voorbij = 0;
       led.classList.remove('is-grabbed');
       track.style.scrollSnapType = '';
       track.style.scrollBehavior = '';
-      // netjes uitkomen op de dichtstbijzijnde post
+      // netjes uitkomen op de dichtstbijzijnde post; het ledje glijdt naar zijn echte plek in de reeks
       const st = stap();
+      thumb.classList.add('is-landing');
+      setTimeout(() => thumb.classList.remove('is-landing'), 500);
       track.scrollTo({ left: Math.round(track.scrollLeft / st) * st });
+      requestAnimationFrame(paint);
     };
     led.addEventListener('pointerup', release);
     led.addEventListener('pointercancel', release);
